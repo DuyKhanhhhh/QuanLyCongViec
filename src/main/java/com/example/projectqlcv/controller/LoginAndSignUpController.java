@@ -1,4 +1,4 @@
 package com.example.projectqlcv.controller;
 
-public class LoginController {
+public class LoginAndSignUpController {
 }

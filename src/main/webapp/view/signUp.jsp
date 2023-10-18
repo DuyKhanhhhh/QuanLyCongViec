@@ -34,7 +34,7 @@
                                     <span class="input-group-text">
                                         <i class="fa-solid fa-envelope" style="color: #000000;font-size: 30px"></i>
                                     <input type="email" name="email" class="form-control form-control-lg"
-                                           placeholder="Your Email"/>
+                                           placeholder="Your Email" required/>
                                     </span>
                                 </div>
 
@@ -42,7 +42,7 @@
                                       <span class="input-group-text">
                                           <i class="fa-solid fa-user" style="color: #000000; font-size: 30px"></i>
                                           <input type="text" name="name" class="form-control form-control-lg"
-                                                 placeholder="Your Name"/>
+                                                 placeholder="Your Name" required/>
                                       </span>
                                 </div>
 
@@ -50,7 +50,7 @@
                                       <span class="input-group-text">
                                           <i class="fa-solid fa-phone" style="color: #000000; font-size: 30px"></i>
                                           <input type="text" name="phone" class="form-control form-control-lg"
-                                           placeholder="Your Phone" pattern="/^\d{10}(?:[-]\d{6})?$/"/>
+                                           placeholder="Your Phone" pattern="/^\d{10}(?:[-]\d{6})?$/" required/>
                                       </span>
                                 </div>
 
@@ -59,7 +59,7 @@
                                           <i class="fa-solid fa-lock" style="color: #000000; font-size: 30px"></i>
                                           <input type="password" name="password" class="form-control form-control-lg"
                                            placeholder="Password"
-                                           pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&.])[A-Za-z\\d@$!%*?&.]{8,}$"/>
+                                           pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&.])[A-Za-z\\d@$!%*?&.]{8,}$" required/>
                                       </span>
                                 </div>
 
@@ -68,7 +68,7 @@
                                          <i class="fa-solid fa-key" style="color: #000000; font-size: 30px"></i>
                                          <input type="password" name="confirmPassword" class="form-control form-control-lg"
                                            placeholder="Repeat Your Password"
-                                           pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&.])[A-Za-z\\d@$!%*?&.]{8,}$"/>
+                                           pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&.])[A-Za-z\\d@$!%*?&.]{8,}$" required/>
                                     </span>
                                 </div>
 

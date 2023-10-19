@@ -42,8 +42,7 @@
                                      <span class="input-group-text">
                                          <i class="fa-solid fa-key" style="color: #000000; font-size: 30px"></i>
                                          <input type="password" name="confirmPassword" class="form-control form-control-lg"
-                                           placeholder="Your Password"
-                                           pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&.])[A-Za-z\\d@$!%*?&.]{8,}$" required/>
+                                           placeholder="Your Password" pattern="^.{6,32}$"  required/>
                                     </span>
                                 </div>
 
@@ -55,7 +54,7 @@
                                 </div>
 
                                 <p class="text-center text-muted mt-5 mb-0">Do not have an account?
-                                    <a href="signUp.jsp" class="fw-bold text-body"><u>SignUp here</u></a>
+                                    <a href="view/signUp.jsp" class="fw-bold text-body"><u>SignUp here</u></a>
                                 </p>
                             </form>
 

@@ -27,7 +27,7 @@
                 <div class="col-12 col-md-9 col-lg-7 col-xl-6">
                     <div class="card" style="border-radius: 25px;">
                         <div class="card-body p-5">
-                            <h2 class="text-center text-center mb-5">Sign Up</h2>
+                            <h2 class="text-center text-center mb-5">LogIn</h2>
                             <form action="" method="post">
 
                                 <div class="form-outline mb-4">
@@ -39,35 +39,10 @@
                                 </div>
 
                                 <div class="form-outline mb-4">
-                                      <span class="input-group-text">
-                                          <i class="fa-solid fa-user" style="color: #000000; font-size: 30px"></i>
-                                          <input type="text" name="name" class="form-control form-control-lg"
-                                                 placeholder="Your Name" required/>
-                                      </span>
-                                </div>
-
-                                <div class="form-outline mb-4">
-                                      <span class="input-group-text">
-                                          <i class="fa-solid fa-phone" style="color: #000000; font-size: 30px"></i>
-                                          <input type="text" name="phone" class="form-control form-control-lg"
-                                           placeholder="Your Phone" pattern="/^\d{10}(?:[-]\d{6})?$/" required/>
-                                      </span>
-                                </div>
-
-                                <div class="form-outline mb-4">
-                                      <span class="input-group-text">
-                                          <i class="fa-solid fa-lock" style="color: #000000; font-size: 30px"></i>
-                                          <input type="password" name="password" class="form-control form-control-lg"
-                                           placeholder="Password"
-                                           pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&.])[A-Za-z\\d@$!%*?&.]{8,}$" required/>
-                                      </span>
-                                </div>
-
-                                <div class="form-outline mb-4">
                                      <span class="input-group-text">
                                          <i class="fa-solid fa-key" style="color: #000000; font-size: 30px"></i>
                                          <input type="password" name="confirmPassword" class="form-control form-control-lg"
-                                           placeholder="Repeat Your Password"
+                                           placeholder="Your Password"
                                            pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&.])[A-Za-z\\d@$!%*?&.]{8,}$" required/>
                                     </span>
                                 </div>
@@ -75,12 +50,12 @@
                                 <div class="d-flex justify-content-center">
                                     <button type="button"
                                             class="btn btn-success btn-light btn-lg gradient-custom-4 text-body">
-                                        Submit
+                                        Login
                                     </button>
                                 </div>
 
-                                <p class="text-center text-muted mt-5 mb-0">Have already an account?
-                                    <a href="#!" class="fw-bold text-body"><u>Login here</u></a>
+                                <p class="text-center text-muted mt-5 mb-0">Do not have an account?
+                                    <a href="signUp.jsp" class="fw-bold text-body"><u>SignUp here</u></a>
                                 </p>
                             </form>
 

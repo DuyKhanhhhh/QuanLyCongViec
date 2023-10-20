@@ -43,7 +43,7 @@ public class LoginAndSignUpController extends HttpServlet {
         try {
             if (loginUser == null) {
                 request.setAttribute("message", "Wrong email or password!");
-                request.getRequestDispatcher("view/login.jsp").forward(request, response);
+                request.getRequestDispatcher("login.jsp").forward(request, response);
             } else {
                 response.sendRedirect("homeUser");
             }
@@ -66,10 +66,10 @@ public class LoginAndSignUpController extends HttpServlet {
             if (loginUser == null) {
                 userDAO.sign_up(email, password, name, phoneNumber);
                 request.setAttribute("message", "Sign up success !");
-                request.getRequestDispatcher("view/login.jsp").forward(request, response);
+                request.getRequestDispatcher("login.jsp").forward(request, response);
             } else {
                 request.setAttribute("message", "Duplicate email please re-enter !");
-                request.getRequestDispatcher("view/signUp.jsp").forward(request, response);
+                request.getRequestDispatcher("signUp.jsp").forward(request, response);
             }
 
         } catch (ServletException e) {

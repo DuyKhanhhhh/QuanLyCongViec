@@ -62,12 +62,18 @@ public class LoginAndSignUpController extends HttpServlet {
             String name = request.getParameter("name");
             String phoneNumber = request.getParameter("phoneNumber");
             String password = request.getParameter("password");
+            String confirmPassword = request.getParameter("confirmPassword");
             LoginUser loginUser = userDAO.checkLoginUser(email);
             if (loginUser == null) {
                 userDAO.sign_up(email, password, name, phoneNumber);
+                if (!password.equals(confirmPassword)) {
+                    request.setAttribute("message","Passwords are not duplicates !");
+                    request.getRequestDispatcher("signUp.jsp").forward(request,response);
+                }
                 request.setAttribute("message", "Sign up success !");
                 request.getRequestDispatcher("login.jsp").forward(request, response);
             } else {
+
                 request.setAttribute("message", "Duplicate email please re-enter !");
                 request.getRequestDispatcher("signUp.jsp").forward(request, response);
             }

@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: titdzvl
@@ -8,6 +9,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+
     <title>Login</title>
 </head>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -27,8 +29,19 @@
                 <div class="col-12 col-md-9 col-lg-7 col-xl-6">
                     <div class="card" style="border-radius: 25px;">
                         <div class="card-body p-5">
-                            <h2 class="text-center text-center mb-5">LogIn</h2>
-                            <form action="" method="post">
+                            <h2 class="text-center text-center mb-5">Login</h2>
+
+                            <c:if test="${message != null}">
+                                <div class="alert alert-success" role="alert">
+                                        ${message}
+                                </div>
+                            </c:if>
+                            <script>
+                                setTimeout(function () {
+                                    document.querySelector(".alert").remove();
+                                }, 3000);
+                            </script>
+                            <form action="/loginAndSignUp?login=login" method="post">
 
                                 <div class="form-outline mb-4">
                                     <span class="input-group-text">
@@ -41,20 +54,32 @@
                                 <div class="form-outline mb-4">
                                      <span class="input-group-text">
                                          <i class="fa-solid fa-key" style="color: #000000; font-size: 30px"></i>
-                                         <input type="password" name="confirmPassword" class="form-control form-control-lg"
-                                           placeholder="Your Password" pattern="^.{6,32}$"  required/>
+                                         <input type="password" name="password" id="password"
+                                                class="form-control form-control-lg"
+                                                placeholder="Your Password" pattern="^.{6,32}$" required/>
+                                                <i class="fa-solid fa-eye" id="show"
+                                                   style="color: #000000; font-size: 20px; margin-left: 1rem"></i>
                                     </span>
                                 </div>
 
+                                <script>
+                                    const password = document.getElementById("password");
+                                    const showButton = document.getElementById("show");
+
+                                    showButton.addEventListener("click", function () {
+                                        password.type = password.type === "password" ? "text" : "password";
+                                    });
+                                </script>
+
                                 <div class="d-flex justify-content-center">
-                                    <button type="button"
+                                    <button type="submit"
                                             class="btn btn-success btn-light btn-lg gradient-custom-4 text-body">
                                         Login
                                     </button>
                                 </div>
 
                                 <p class="text-center text-muted mt-5 mb-0">Do not have an account?
-                                    <a href="view/signUp.jsp" class="fw-bold text-body"><u>SignUp here</u></a>
+                                    <a href="signUp.jsp" class="fw-bold text-body"><u>SignUp here</u></a>
                                 </p>
                             </form>
 

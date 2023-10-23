@@ -5,7 +5,7 @@ import com.example.projectqlcv.model.User;
 public interface IUserDAO {
     public User login(String userName, String password);
 
-    public void sign_up(String email, String password, String name, String phone);
+    public void signUp(String email, String password, String name, String phone);
 
     public User checkLoginUser(String email);
 

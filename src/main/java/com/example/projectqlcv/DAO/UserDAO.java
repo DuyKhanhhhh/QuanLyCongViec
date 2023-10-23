@@ -7,7 +7,7 @@ import java.sql.*;
 public class UserDAO implements IUserDAO{
     private String connectUrl = "jdbc:mysql://localhost:3306/workManagement";
     private String userName = "root";
-    private String passWord = "1";
+    private String passWord = "Duykhanh123@";
 
     private static final String ADD_USER_TO_SQL = "INSERT INTO user(email, name, phoneNumber, password) VALUES(?, ?, ?, ?) ";
     private static final String LOGIN_USER_HOME =  "SELECT * FROM user WHERE email = ? AND password = ?";
@@ -80,7 +80,7 @@ public class UserDAO implements IUserDAO{
     }
 
     @Override
-    public void sign_up(String email, String password, String name, String phoneNumber) {
+    public void signUp(String email, String password, String name, String phoneNumber) {
         try (Connection connection = connection();
              PreparedStatement preparedStatement = connection.prepareStatement(ADD_USER_TO_SQL);) {
             preparedStatement.setString(1, email);

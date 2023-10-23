@@ -45,7 +45,7 @@ public class LoginAndSignUpController extends HttpServlet {
                 request.setAttribute("message", "Wrong email or password!");
                 request.getRequestDispatcher("login.jsp").forward(request, response);
             } else {
-                response.sendRedirect("homeUser");
+                response.sendRedirect("homeUser.jsp");
             }
         } catch (ServletException e) {
             throw new RuntimeException(e);
@@ -69,7 +69,7 @@ public class LoginAndSignUpController extends HttpServlet {
                     request.setAttribute("message","Passwords are not duplicates !");
                     request.getRequestDispatcher("signUp.jsp").forward(request,response);
                 }else {
-                    userDAO.sign_up(email, password, name, phoneNumber);
+                    userDAO.signUp(email, password, name, phoneNumber);
                     request.setAttribute("message", "Sign up success !");
                     request.getRequestDispatcher("login.jsp").forward(request, response);
                 }

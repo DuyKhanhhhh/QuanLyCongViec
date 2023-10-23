@@ -6,18 +6,38 @@ public class User {
     private String email;
     private String phoneNumber;
     private String password;
+    private String rePassword;
     private String address;
     private String avatar;
 
     public User() {
     }
-
+    public User(String email, String rePassword) {
+        this.email = email;
+        this.rePassword = rePassword;
+    }
+    public User(int id, String email, String password) {
+        this.id = id;
+        this.email = email;
+        this.password = password;
+    }
     public User(int id, String name, String email, String phoneNumber, String password, String address, String avatar) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.password = password;
+        this.address = address;
+        this.avatar = avatar;
+    }
+
+    public User(int id, String name, String email, String phoneNumber, String password, String rePassword, String address, String avatar) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.password = password;
+        this.rePassword = rePassword;
         this.address = address;
         this.avatar = avatar;
     }
@@ -77,6 +97,14 @@ public class User {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getRePassword() {
+        return rePassword;
+    }
+
+    public void setRePassword(String rePassword) {
+        this.rePassword = rePassword;
     }
 
     public String getAvatar() {

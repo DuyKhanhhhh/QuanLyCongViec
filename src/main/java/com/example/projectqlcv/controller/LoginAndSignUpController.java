@@ -1,6 +1,6 @@
 package com.example.projectqlcv.controller;
 
-import com.example.projectqlcv.model.LoginUser;
+import com.example.projectqlcv.model.User;
 import com.example.projectqlcv.DAO.UserDAO;
 
 import javax.servlet.ServletException;
@@ -39,9 +39,9 @@ public class LoginAndSignUpController extends HttpServlet {
     private void loginUser(HttpServletRequest request, HttpServletResponse response) {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
-        LoginUser loginUser = userDAO.login(email, password);
+        User user = userDAO.login(email, password);
         try {
-            if (loginUser == null) {
+            if (user == null) {
                 request.setAttribute("message", "Wrong email or password!");
                 request.getRequestDispatcher("login.jsp").forward(request, response);
             } else {
@@ -63,17 +63,17 @@ public class LoginAndSignUpController extends HttpServlet {
             String phoneNumber = request.getParameter("phoneNumber");
             String password = request.getParameter("password");
             String confirmPassword = request.getParameter("confirmPassword");
-            LoginUser loginUser = userDAO.checkLoginUser(email);
-            if (loginUser == null) {
-                userDAO.sign_up(email, password, name, phoneNumber);
+            User user = userDAO.checkLoginUser(email);
+            if (user == null) {
                 if (!password.equals(confirmPassword)) {
                     request.setAttribute("message","Passwords are not duplicates !");
                     request.getRequestDispatcher("signUp.jsp").forward(request,response);
+                }else {
+                    userDAO.sign_up(email, password, name, phoneNumber);
+                    request.setAttribute("message", "Sign up success !");
+                    request.getRequestDispatcher("login.jsp").forward(request, response);
                 }
-                request.setAttribute("message", "Sign up success !");
-                request.getRequestDispatcher("login.jsp").forward(request, response);
             } else {
-
                 request.setAttribute("message", "Duplicate email please re-enter !");
                 request.getRequestDispatcher("signUp.jsp").forward(request, response);
             }

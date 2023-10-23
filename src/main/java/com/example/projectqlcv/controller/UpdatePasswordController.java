@@ -1,7 +1,7 @@
 package com.example.projectqlcv.controller;
 
 import com.example.projectqlcv.DAO.UserDAO;
-import com.example.projectqlcv.model.LoginUser;
+import com.example.projectqlcv.model.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -38,8 +38,8 @@ public class UpdatePasswordController extends HttpServlet {
         String newPassword = request.getParameter("newPassword");
         String confirmPassword = request.getParameter("confirmPassword");
         try {
-            LoginUser loginUser = userDAO.findPasswordByEmail(email, password);
-            if (loginUser != null) {
+            User user = userDAO.findPasswordByEmail(email, password);
+            if (user != null) {
                 if (newPassword.equals(confirmPassword) && !password.equals(newPassword)) {
                     userDAO.editPassWordUser(email, newPassword);
                     request.setAttribute("message", "Update success !");

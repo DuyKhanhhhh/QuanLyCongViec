@@ -1,6 +1,6 @@
 package com.example.projectqlcv.DAO;
 
-import com.example.projectqlcv.model.LoginUser;
+import com.example.projectqlcv.model.User;
 
 import java.sql.*;
 
@@ -9,14 +9,14 @@ public class UserDAO implements IUserDAO{
     private String userName = "root";
     private String passWord = "1";
 
-    private static final String ADD_USER_TO_SQL = "INSERT INTO signUpUser(email, name, phoneNumber, password) VALUES(?, ?, ?, ?) ";
-    private static final String LOGIN_USER_HOME =  "SELECT * FROM signUpUser WHERE email = ? AND password = ?";
-    private static final String CHECK_USER_LOGIN = "select * from signUpUser where email = ?";
-    private final String UPDATE_PASSWORD_USER = "UPDATE signUpUser SET password = ? WHERE email = ? ";
-    private final String SELECT_PASSWORD_BY_EMAIL = "SELECT email,password FROM signUpUser WHERE email = ? AND password = ?";
+    private static final String ADD_USER_TO_SQL = "INSERT INTO user(email, name, phoneNumber, password) VALUES(?, ?, ?, ?) ";
+    private static final String LOGIN_USER_HOME =  "SELECT * FROM user WHERE email = ? AND password = ?";
+    private static final String CHECK_USER_LOGIN = "select * from user where email = ?";
+    private final String UPDATE_PASSWORD_USER = "UPDATE user SET password = ? WHERE email = ? ";
+    private final String SELECT_PASSWORD_BY_EMAIL = "SELECT email,password FROM user WHERE email = ? AND password = ?";
     @Override
-    public LoginUser findPasswordByEmail(String email, String password) {
-        LoginUser loginUser = null;
+    public User findPasswordByEmail(String email, String password) {
+        User user = null;
         Connection connection = null;
         try {
             connection = connection();
@@ -27,14 +27,14 @@ public class UserDAO implements IUserDAO{
             while (resultSet.next()) {
                 String emailUser = resultSet.getString("email");
                 String passwordUser = resultSet.getString("password");
-                loginUser = new LoginUser(emailUser, passwordUser);
+                user = new User(emailUser, passwordUser);
             }
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return loginUser;
+        return user;
     }
 
     @Override
@@ -58,8 +58,8 @@ public class UserDAO implements IUserDAO{
         return connection;
     }
 
-    public LoginUser login(String email, String password) {
-        LoginUser loginUser = null;
+    public User login(String email, String password) {
+        User user = null;
         try (Connection connection = connection();
              PreparedStatement preparedStatement = connection.prepareStatement(LOGIN_USER_HOME);) {
             preparedStatement.setString(1, email);
@@ -69,14 +69,14 @@ public class UserDAO implements IUserDAO{
                 int id = Integer.parseInt(rs.getString("id"));
                 String emailDB = rs.getString("email");
                 String passWord = rs.getString("password");
-                loginUser = new LoginUser(id, emailDB, passWord);
+                user= new User(id, emailDB, passWord);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
-        return loginUser;
+        return user;
     }
 
     @Override
@@ -96,8 +96,8 @@ public class UserDAO implements IUserDAO{
     }
 
     @Override
-    public LoginUser checkLoginUser(String email) {
-        LoginUser loginUser = null;
+    public User checkLoginUser(String email) {
+        User user = null;
         try(Connection connection = connection();
             PreparedStatement preparedStatement = connection.prepareStatement(CHECK_USER_LOGIN)) {
             preparedStatement.setString(1,email);
@@ -106,13 +106,13 @@ public class UserDAO implements IUserDAO{
                 int id = rs.getInt("id");
                 String emailDB = rs.getString("email");
                 String password = rs.getString("password");
-                loginUser = new LoginUser(id,emailDB,password);
+                user = new User(id,emailDB,password);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
-        return loginUser;
+        return user;
     }
 }

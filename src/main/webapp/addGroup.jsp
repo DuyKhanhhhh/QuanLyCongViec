@@ -1,4 +1,3 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: nguyenhuugiang19072004
@@ -48,17 +47,19 @@
         width: 100%;
         height: 3rem;
     }
-
-    .group_name {
+    .group_name{
         width: 80%;
         height: 3rem;
     }
-
-    .group_add {
+    .group_add{
         width: 20%;
         height: 3rem;
         margin-left: 1rem;
         margin-top: 1rem;
+    }
+    .d_flex_main {
+        width: 100%;
+        height: 4rem;
     }
 
     .d_flex_left {
@@ -79,16 +80,16 @@
         position: relative;
     }
 
-    button {
-        border: none;
-        border-radius: 5px;
-        padding: 15px 20px;
-        font-size: 22px;
-        cursor: pointer;
+    button{
+        border:none;
+        border-radius:5px;
+        padding:15px 20px;
+        font-size:22px;
+        cursor:pointer;
     }
 
-    button:hover {
-        background-color: #ddd;
+    button:hover{
+        background-color:#ddd;
     }
 
     .dropdown-options {
@@ -96,7 +97,7 @@
         position: absolute;
         overflow: auto;
         background-color: #646464;
-        border-radius: 5px;
+        border-radius:5px;
         box-shadow: 0px 10px 10px 0px rgba(255, 255, 255, 0.4);
     }
 
@@ -110,39 +111,13 @@
         color: #000000;
         padding: 5px;
         text-decoration: none;
-        padding: 20px 20px;
+        padding:20px 20px;
     }
 
     .dropdown-options a:hover {
         color: #0a0a23;
         background-color: #ddd;
-        border-radius: 5px;
-    }
-
-    .group_main {
-        width: 100%;
-        height: 250px;
-        margin-bottom: 10px;
-    }
-
-    .name_group {
-        width: 90%;
-        height: 40px;
-        margin-bottom: 8px;
-        margin-left: 10%;
-    }
-
-    .group_header {
-        width: 100%;
-        height: 3rem;
-    }
-
-    .group_content {
-        margin-top: 5px;
-        width: 210px;
-        height: 160px;
-        border-radius: 40px;
-        border: 1px solid black;
+        border-radius:5px;
     }
 
 </style>
@@ -198,63 +173,48 @@
                         <span class="textSpan">Nhóm</span>
                     </div>
                     <div class="group_add">
-                        <a href="/groups?action=addGroup"><i class="fa-regular fa-square-plus"
-                                                             style="color: #000000;font-size: 30px"></i></a>
+                        <a href="/groups?action=addGroup"><i class="fa-regular fa-square-plus" style="color: #000000;font-size: 30px"></i></a>
                     </div>
                 </div>
             </div>
-            <c:forEach var="group" items="${groups}">
-                <div class="name_group">
-                    <h2>${group.name}</h2>
-                </div>
+            <div class="d-flex  align-items-center">
 
-            </c:forEach>
-
+            </div>
         </div>
         <div class="col-10">
-            <div class="d-flex  align-items-center" id="contentTitle">
-                <i class="fa-solid fa-user-group" style="color: #000000; font-size: 30px"></i>
-                <span class="textSpan">Nhóm Của Bạn</span>
-            </div>
-            <c:forEach var="group" items="${groups}">
-                <div class="group_main">
-                    <div class="group_header">
-                        <div class="d_flex_left">
-                            <div class="project">
-                                <h2>${group.name}</h2>
-                            </div>
-                        </div>
-                        <div class="d_flex_right">
-                            <div class="d-flex align-items-center ml-auto">
-                                <a href="#" style="text-decoration: none;color: black">
-                                    <i class="fa-solid fa-table" style="color: #000000; font-size: 30px; "></i>
-                                    <span class="textSpan">Bảng</span>
-                                </a>
-
-                                <a href="#" style="text-decoration: none;color: black">
-                                    <i class="fa-solid fa-user-group" style="color: #000000; font-size: 30px"></i>
-                                    <span class="textSpan">Thành Viên</span>
-                                </a>
-
-                                <a href="#" style="text-decoration: none;color: black">
-                                    <i class="fa-solid fa-gear" style="color: #000000; font-size: 30px"></i>
-                                    <span class="textSpan">Cài Đặt</span>
-                                </a>
-                            </div>
-
-                        </div>
+            <form method="post" action="/groups?action=addGroup">
+                <div>
+                    <h2>Xây dụng nhóm của bạn</h2>
+                    <div>
+                        <label>Name Group</label>
+                        <input type="text" name="name">
                     </div>
-                    <div class="group_content">
-                        <div class="table_create">
-                            <h4 style="text-align: center;margin-top: 33%">Tạo Bảng Mới</h4>
-                        </div>
+                    <div>
+                        <label>Group Type</label>
+                        <select name="groupType" style="width: 150px; height: 40px">
+                            <option></option>
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label>Permission</label>
+                        <select name="permission" style="width: 150px;height: 40px">
+                            <option></option>
+                            <option>Public</option>
+                            <option>Private</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label>Describe</label>
+                        <input type="text" name="information">
+                    </div>
+                    <div>
+                        <button type="submit">Tạo mới</button>
                     </div>
                 </div>
-            </c:forEach>
-            <div class="d-flex  align-items-center">
-                <i class="fa-solid fa-user-group" style="color: #000000; font-size: 30px"></i>
-                <span class="textSpan">Thành Viên Các Nhóm</span>
-            </div>
+            </form>
         </div>
     </div>
 </div>

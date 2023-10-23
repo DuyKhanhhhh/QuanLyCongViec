@@ -1,19 +1,24 @@
 package com.example.projectqlcv.DAO;
 
+import com.example.projectqlcv.model.Group;
 import com.example.projectqlcv.model.User;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserDAO implements IUserDAO{
     private String connectUrl = "jdbc:mysql://localhost:3306/workManagement";
     private String userName = "root";
-    private String passWord = "Duykhanh123@";
+    private String passWord = "giang";
 
     private static final String ADD_USER_TO_SQL = "INSERT INTO user(email, name, phoneNumber, password) VALUES(?, ?, ?, ?) ";
     private static final String LOGIN_USER_HOME =  "SELECT * FROM user WHERE email = ? AND password = ?";
     private static final String CHECK_USER_LOGIN = "select * from user where email = ?";
-    private final String UPDATE_PASSWORD_USER = "UPDATE user SET password = ? WHERE email = ? ";
-    private final String SELECT_PASSWORD_BY_EMAIL = "SELECT email,password FROM user WHERE email = ? AND password = ?";
+    private static final String UPDATE_PASSWORD_USER = "UPDATE user SET password = ? WHERE email = ? ";
+    private static final String SELECT_PASSWORD_BY_EMAIL = "SELECT email,password FROM user WHERE email = ? AND password = ?";
+    private static final String ADD_GROUP_TO_SQL = "INSERT INTO groupWork(name,groupType,permission,information) VALUES(?,?,?,?)";
+    private static final String SELECT_ALL_GROUP_WORK = "SELECT * FROM groupWork";
     @Override
     public User findPasswordByEmail(String email, String password) {
         User user = null;
@@ -50,6 +55,7 @@ public class UserDAO implements IUserDAO{
             throw new RuntimeException(e);
         }
     }
+
 
     protected Connection connection() throws ClassNotFoundException, SQLException {
         Connection connection = null;
@@ -115,4 +121,44 @@ public class UserDAO implements IUserDAO{
         }
         return user;
     }
+    @Override
+    public void addGroup(Group group) {
+        try {
+            Connection connection = connection();
+            PreparedStatement preparedStatement = connection.prepareStatement(ADD_GROUP_TO_SQL);
+            preparedStatement.setString(1,group.getName());
+            preparedStatement.setString(2,group.getGroupType());
+            preparedStatement.setString(3,group.getPermission());
+            preparedStatement.setString(4,group.getInformation());
+            preparedStatement.executeUpdate();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public List<Group> selectGroupFromSQL() {
+        List<Group> groups = new ArrayList<>();
+        try {
+            Connection connection = connection();
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(SELECT_ALL_GROUP_WORK);
+            while (resultSet.next()){
+                int id = resultSet.getInt("id");
+                String name = resultSet.getString("name");
+                String groupType = resultSet.getString("groupType");
+                String permission = resultSet.getString("permission");
+                String information = resultSet.getString("information");
+                groups.add(new Group(id,name,groupType,permission,information));
+            }
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return groups;
+    }
+
 }

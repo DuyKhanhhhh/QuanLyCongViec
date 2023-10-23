@@ -3,13 +3,15 @@ package com.example.projectqlcv.DAO;
 import com.example.projectqlcv.model.User;
 
 public interface IUserDAO {
-    public User login(String userName, String password);
+    User login(String userName, String password);
 
-    public void signUp(String email, String password, String name, String phone);
+    void signUp(String email, String password, String name, String phone);
 
-    public User checkLoginUser(String email);
+    User checkLoginUser(String email);
 
-    public User findPasswordByEmail(String email, String password);
+    User findPasswordByEmail(String email, String password);
 
-    public void editPassWordUser(String email, String rePassword);
+    void editPassWordUser(String email, String rePassword);
+
+
 }

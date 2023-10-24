@@ -47,7 +47,7 @@
                                     <span class="input-group-text">
                                         <i class="fa-solid fa-envelope" style="color: #000000;font-size: 30px"></i>
                                     <input type="email" name="email" class="form-control form-control-lg"
-                                           placeholder="Your Email" required/>
+                                           placeholder="Your Email" pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"  required/>
                                     </span>
                                 </div>
 

@@ -16,8 +16,12 @@ public interface IUserDAO {
     User findPasswordByEmail(String email, String password);
 
     void editPassWordUser(String email, String rePassword);
+
     void addGroup(Group group);
+
     List<Group> selectGroupFromSQL();
+
     void addGroup(Table table);
+
     List<Table> selectAllTable();
 }

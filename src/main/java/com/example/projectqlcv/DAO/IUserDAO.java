@@ -1,15 +1,23 @@
 package com.example.projectqlcv.DAO;
 
+import com.example.projectqlcv.model.Group;
+import com.example.projectqlcv.model.Table;
 import com.example.projectqlcv.model.User;
 
+import java.util.List;
+
 public interface IUserDAO {
-    public User login(String userName, String password);
+    User login(String userName, String password);
 
-    public void sign_up(String email, String password, String name, String phone);
+    void signUp(String email, String password, String name, String phone);
 
-    public User checkLoginUser(String email);
+    User checkLoginUser(String email);
 
-    public User findPasswordByEmail(String email, String password);
+    User findPasswordByEmail(String email, String password);
 
-    public void editPassWordUser(String email, String rePassword);
+    void editPassWordUser(String email, String rePassword);
+    void addGroup(Group group);
+    List<Group> selectGroupFromSQL();
+    void addGroup(Table table);
+    List<Table> selectAllTable();
 }

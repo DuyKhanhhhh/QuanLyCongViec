@@ -23,6 +23,13 @@ public class UserDAO implements IUserDAO {
     private static final String ADD_TABLE_TO_SQL = "INSERT INTO tableWork(tableName, permission, groupDescribe) VALUES(?, ?, ?)";
     private static final String SELECT_ALL_TABLE = "SELECT * FROM tableWork";
 
+    protected Connection connection() throws ClassNotFoundException, SQLException {
+        Connection connection = null;
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        connection = DriverManager.getConnection(connectUrl, userName, passWord);
+        return connection;
+    }
+  
     @Override
     public User findPasswordByEmail(String email, String password) {
         User user = null;
@@ -60,15 +67,6 @@ public class UserDAO implements IUserDAO {
         }
     }
 
-
-    protected Connection connection() throws ClassNotFoundException, SQLException {
-
-
-        Connection connection = null;
-        Class.forName("com.mysql.cj.jdbc.Driver");
-        connection = DriverManager.getConnection(connectUrl, userName, passWord);
-        return connection;
-    }
 
     public User login(String email, String password) {
         User user = null;

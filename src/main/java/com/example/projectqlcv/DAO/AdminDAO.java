@@ -1,10 +1,14 @@
 package com.example.projectqlcv.DAO;
 
+
+import com.example.projectqlcv.model.Table;
+
 import com.example.projectqlcv.model.User;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+
 
 public class AdminDAO implements IAdminDAO {
     private String connectUrl = "jdbc:mysql://localhost:3306/workManagement";
@@ -14,8 +18,6 @@ public class AdminDAO implements IAdminDAO {
     private static final String SELECT_ALL_USER = "SELECT * FROM user";
 
     protected Connection connection() throws ClassNotFoundException, SQLException {
-
-
         Connection connection = null;
         Class.forName("com.mysql.cj.jdbc.Driver");
         connection = DriverManager.getConnection(connectUrl, userName, passWord);
@@ -37,6 +39,7 @@ public class AdminDAO implements IAdminDAO {
         return rowDeleted;
     }
     @Override
+
     public List<User> selectAllUser() {
         List<User> users = new ArrayList<>();
         Connection connection = null;

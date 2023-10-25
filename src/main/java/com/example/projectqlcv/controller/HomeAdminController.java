@@ -1,6 +1,10 @@
 package com.example.projectqlcv.controller;
 
 import com.example.projectqlcv.DAO.AdminDAO;
+
+
+import com.example.projectqlcv.DAO.IUserDAO;
+
 import com.example.projectqlcv.DAO.UserDAO;
 import com.example.projectqlcv.model.User;
 
@@ -10,8 +14,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+
 import java.sql.SQLException;
 import java.util.List;
+import java.util.ArrayList;
 
 @WebServlet(name = "HomeAdminController", value = "/homeAdmin")
 public class HomeAdminController extends HttpServlet {
@@ -61,5 +67,4 @@ public class HomeAdminController extends HttpServlet {
             throw new RuntimeException(e);
         }
     }
-
 }

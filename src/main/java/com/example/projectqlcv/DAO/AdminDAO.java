@@ -6,9 +6,9 @@ import com.example.projectqlcv.model.User;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+public class AdminDAO implements IAdminDAO {
 
 
-public class AdminDAO implements IAdminDao {
     private String connectUrl = "jdbc:mysql://localhost:3306/workManagement";
     private String userName = "root";
     private String passWord = "giang";
@@ -17,6 +17,7 @@ public class AdminDAO implements IAdminDao {
     private static final String SELECT_ALL_USER_ID = "SELECT * FROM user WHERE id = ?";
     private static final String DELETE_USER_SQL = "delete from user where id = ?";
     private static final String SELECT_ALL_USER = "SELECT * FROM user";
+
 
     protected Connection connection() throws ClassNotFoundException, SQLException {
         Connection connection = null;
@@ -65,7 +66,7 @@ public class AdminDAO implements IAdminDao {
         }
         return rowDeleted;
     }
-  
+
     @Override
     public boolean updateUser(int id, User user) {
         boolean updateRow;

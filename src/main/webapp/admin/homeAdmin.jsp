@@ -16,6 +16,16 @@
 
 </head>
 <body>
+<c:if test="${message != null}">
+    <div class="alert alert-success" role="alert">
+            ${message}
+    </div>
+</c:if>
+<script>
+    setTimeout(function () {
+        document.querySelector(".alert").remove();
+    }, 3000);
+</script>
 <table class="table table-striped">
     <tr>
         <th>Id</th>
@@ -41,7 +51,7 @@
                    <a href="/homeAdmin?user=update&id=${list.id}" style="margin-right: 20px; text-decoration: none" ;>
                         <i class="fa-solid fa-pen-to-square"></i>
                    </a>
-                   <a href="/homeAdmin?user=delete">
+                   <a href="/homeAdmin?user=delete&id=${list.id}">
                         <i class="fa-solid fa-trash"></i>
                    </a>
                </span>

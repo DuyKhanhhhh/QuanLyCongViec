@@ -11,12 +11,13 @@ public class AdminDAO implements IAdminDAO {
 
     private String connectUrl = "jdbc:mysql://localhost:3306/workManagement";
     private String userName = "root";
-    private String passWord = "giang";
-
+    private String passWord = "1";
+    private static final String ADD_USER_TO_SQL = "INSERT INTO user(email, name, phoneNumber, password) VALUES(?, ?, ?, ?) ";
     private static final String UPDATE_USER_ID = "UPDATE user SET name = ?, email = ? , phoneNumber = ? , password = ? , address = ? , avatar =  ? WHERE id = ? ";
     private static final String SELECT_ALL_USER_ID = "SELECT * FROM user WHERE id = ?";
     private static final String DELETE_USER_SQL = "delete from user where id = ?";
     private static final String SELECT_ALL_USER = "SELECT * FROM user";
+    private static final String CHECK_USER_LOGIN = "select * from user where email = ?";
 
 
     protected Connection connection() throws ClassNotFoundException, SQLException {
@@ -50,6 +51,42 @@ public class AdminDAO implements IAdminDAO {
             throw new RuntimeException(e);
         }
         return users;
+    }
+
+    @Override
+    public void createUser(String email, String password, String name, String phoneNumber) {
+        try (Connection connection = connection();
+             PreparedStatement preparedStatement = connection.prepareStatement(ADD_USER_TO_SQL);) {
+            preparedStatement.setString(1, email);
+            preparedStatement.setString(2, name);
+            preparedStatement.setString(3, phoneNumber);
+            preparedStatement.setString(4, password);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    @Override
+    public User checkLoginUser(String email) {
+        User user = null;
+        try (Connection connection = connection();
+             PreparedStatement preparedStatement = connection.prepareStatement(CHECK_USER_LOGIN)) {
+            preparedStatement.setString(1, email);
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String emailDB = rs.getString("email");
+                String password = rs.getString("password");
+                user = new User(id, emailDB, password);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        return user;
     }
 
     @Override

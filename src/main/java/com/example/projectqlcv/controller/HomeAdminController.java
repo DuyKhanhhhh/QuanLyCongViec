@@ -2,6 +2,7 @@ package com.example.projectqlcv.controller;
 
 import com.example.projectqlcv.DAO.AdminDAO;
 
+import com.example.projectqlcv.DAO.IAdminDAO;
 import com.example.projectqlcv.DAO.IUserDAO;
 import com.example.projectqlcv.DAO.UserDAO;
 
@@ -19,38 +20,49 @@ import java.util.ArrayList;
 
 @WebServlet(name = "HomeAdminController", value = "/homeAdmin")
 public class HomeAdminController extends HttpServlet {
-
     private IAdminDAO adminDAO;
-
-
     @Override
     public void init() {
         adminDAO = new AdminDAO();
     }
-  
+
     private void deleteUser(HttpServletRequest request, HttpServletResponse response) {
         int id = Integer.parseInt(request.getParameter("id"));
         adminDAO.deleteUser(id);
         List<User> list = adminDAO.selectAllUser();
-        request.setAttribute("message","Delete success !");
-        request.setAttribute("listUser",list);
+        request.setAttribute("message", "Delete success !");
+        request.setAttribute("listUser", list);
         try {
-            request.getRequestDispatcher("admin/homeAdmin.jsp").forward(request,response);
+            request.getRequestDispatcher("homeAdmin.jsp").forward(request, response);
         } catch (ServletException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
-  
-    private void deleteUser(HttpServletRequest request, HttpServletResponse response) {
-        int id = Integer.parseInt(request.getParameter("id"));
-        adminDAO.deleteUser(id);
-        List<User> list = adminDAO.selectAllUser();
-        request.setAttribute("message","Delete success !");
-        request.setAttribute("listUser",list);
+
+    private void createUser(HttpServletRequest request, HttpServletResponse response) {
         try {
-            request.getRequestDispatcher("homeAdmin.jsp").forward(request,response);
+            String email = request.getParameter("email");
+            String name = request.getParameter("name");
+            String phoneNumber = request.getParameter("phoneNumber");
+            String password = request.getParameter("password");
+            String confirmPassword = request.getParameter("confirmPassword");
+            User user = adminDAO.checkLoginUser(email);
+            if (user == null) {
+                if (!password.equals(confirmPassword)) {
+                    request.setAttribute("message", "Passwords are not duplicates !");
+                    request.getRequestDispatcher("admin/create.jsp").forward(request, response);
+                } else {
+                    adminDAO.createUser(email, password, name, phoneNumber);
+                    request.setAttribute("message", "Add success !");
+                    request.getRequestDispatcher("/homeAdmin").forward(request, response);
+                }
+            } else {
+                request.setAttribute("message", "Duplicate email please re-enter !");
+                request.getRequestDispatcher("admin/create.jsp").forward(request, response);
+            }
+
         } catch (ServletException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {
@@ -65,6 +77,9 @@ public class HomeAdminController extends HttpServlet {
             user = "";
         }
         switch (user) {
+            case "create":
+                createUser(request, response);
+                break;
             case "update":
                 updateUser(request, response);
                 break;
@@ -102,11 +117,15 @@ public class HomeAdminController extends HttpServlet {
             case "delete":
                 deleteUser(request, response);
                 break;
+            case "create":
+                showNewForm(request,response);
+                break;
             default:
                 showAllUser(request, response);
         }
 
     }
+
     private void showAllUser(HttpServletRequest request, HttpServletResponse response) {
         List<User> userList = adminDAO.selectAllUser();
         request.setAttribute("listUser", userList);
@@ -132,5 +151,7 @@ public class HomeAdminController extends HttpServlet {
             throw new RuntimeException(e);
         }
     }
-
+    private void showNewForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.getRequestDispatcher("admin/create.jsp").forward(request, response);
+    }
 }

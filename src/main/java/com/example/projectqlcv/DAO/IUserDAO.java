@@ -23,4 +23,5 @@ public interface IUserDAO {
     void addGroup(Table table);
 
     List<Table> selectAllTable();
+
 }

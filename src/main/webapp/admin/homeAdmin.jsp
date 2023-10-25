@@ -16,6 +16,16 @@
 
 </head>
 <body>
+<c:if test="${message != null}">
+    <div class="alert alert-success" role="alert">
+            ${message}
+    </div>
+</c:if>
+<script>
+    setTimeout(function () {
+        document.querySelector(".alert").remove();
+    }, 3000);
+</script>
 <table class="table table-striped">
     <tr>
         <th>Id</th>

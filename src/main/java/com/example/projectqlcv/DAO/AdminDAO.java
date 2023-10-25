@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 public class AdminDAO implements IAdminDAO {
 
+
     private String connectUrl = "jdbc:mysql://localhost:3306/workManagement";
     private String userName = "root";
     private String passWord = "giang";
@@ -24,7 +25,7 @@ public class AdminDAO implements IAdminDAO {
         connection = DriverManager.getConnection(connectUrl, userName, passWord);
         return connection;
     }
-
+    
     @Override
     public List<User> selectAllUser() {
         List<User> users = new ArrayList<>();

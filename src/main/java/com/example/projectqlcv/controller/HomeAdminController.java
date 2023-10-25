@@ -2,7 +2,8 @@ package com.example.projectqlcv.controller;
 
 import com.example.projectqlcv.DAO.AdminDAO;
 
-import com.example.projectqlcv.DAO.IAdminDAO;
+import com.example.projectqlcv.DAO.IUserDAO;
+import com.example.projectqlcv.DAO.UserDAO;
 
 import com.example.projectqlcv.model.User;
 
@@ -18,7 +19,9 @@ import java.util.ArrayList;
 
 @WebServlet(name = "HomeAdminController", value = "/homeAdmin")
 public class HomeAdminController extends HttpServlet {
+
     private IAdminDAO adminDAO;
+
 
     @Override
     public void init() {
@@ -33,6 +36,21 @@ public class HomeAdminController extends HttpServlet {
         request.setAttribute("listUser",list);
         try {
             request.getRequestDispatcher("admin/homeAdmin.jsp").forward(request,response);
+        } catch (ServletException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+  
+    private void deleteUser(HttpServletRequest request, HttpServletResponse response) {
+        int id = Integer.parseInt(request.getParameter("id"));
+        adminDAO.deleteUser(id);
+        List<User> list = adminDAO.selectAllUser();
+        request.setAttribute("message","Delete success !");
+        request.setAttribute("listUser",list);
+        try {
+            request.getRequestDispatcher("homeAdmin.jsp").forward(request,response);
         } catch (ServletException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {
@@ -80,17 +98,15 @@ public class HomeAdminController extends HttpServlet {
         switch (user) {
             case "update":
                 showUpDateForm(request, response);
-
                 break;
             case "delete":
-                deleteUser(request,response);
+                deleteUser(request, response);
                 break;
             default:
                 showAllUser(request, response);
         }
 
     }
-
     private void showAllUser(HttpServletRequest request, HttpServletResponse response) {
         List<User> userList = adminDAO.selectAllUser();
         request.setAttribute("listUser", userList);

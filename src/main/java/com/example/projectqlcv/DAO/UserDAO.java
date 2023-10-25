@@ -12,7 +12,9 @@ public class UserDAO implements IUserDAO {
     private String connectUrl = "jdbc:mysql://localhost:3306/workManagement";
     private String userName = "root";
 
+
     private String passWord = "1";
+
 
 
     private static final String ADD_USER_TO_SQL = "INSERT INTO user(email, name, phoneNumber, password) VALUES(?, ?, ?, ?) ";

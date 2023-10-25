@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: nguyenhuugiang19072004
@@ -6,7 +7,6 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
- <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <title>Home</title>
@@ -26,7 +26,6 @@
 
     #boxLeft {
         background-color: #b4b4b4;
-        height: 900px;
     }
 
     .textSpan {
@@ -39,7 +38,7 @@
         color: black;
         margin-right: 18px;
     }
-  
+
     #contentTitle {
         margin: 36px;
     }
@@ -59,23 +58,13 @@
         width: 80%;
         height: 3rem;
     }
-  
-    .group_name{
-        width: 80%;
-        height: 3rem;
-    }
-  
-    .group_add{
+
+    .group_add {
         width: 20%;
         height: 3rem;
         margin-left: 1rem;
         margin-top: 1rem;
     }
-  
-    .d_flex_main {
-        width: 100%;
-        height: 4rem;
-  }
 
     .d_flex_left {
         width: 50%;
@@ -105,17 +94,6 @@
 
     button:hover {
         background-color: #ddd;
-
-    button{
-        border:none;
-        border-radius:5px;
-        padding:15px 20px;
-        font-size:22px;
-        cursor:pointer;
-    }
-
-    button:hover{
-        background-color:#ddd;
     }
 
     .dropdown-options {
@@ -124,7 +102,6 @@
         overflow: auto;
         background-color: #646464;
         border-radius: 5px;
-        border-radius:5px;
         box-shadow: 0px 10px 10px 0px rgba(255, 255, 255, 0.4);
     }
 
@@ -140,7 +117,6 @@
         text-decoration: none;
         padding: 20px 20px;
         text-align: center;
-        padding:20px 20px;
     }
 
     .dropdown-options a:hover {
@@ -173,7 +149,6 @@
         height: 160px;
         border-radius: 40px;
         border: 1px solid black;
-        border-radius:5px;
     }
 
 </style>
@@ -193,16 +168,6 @@
                             <a href="#">123</a>
                             <a href="#">456</a>
                             <a href="#">6576</a>
-                    <img src="logo.png" width="80px"
-                         height="60px">
-                </div>
-                <div class="collapse navbar-collapse">
-                    <div class="dropdown">
-                        <button>Nhóm</button>
-                        <div class="dropdown-options">
-                            <a href="#">?</a>
-                            <a href="#">?</a>
-                            <a href="#">?</a>
                         </div>
                     </div>
                 </div>
@@ -214,6 +179,7 @@
                         <button>Name</button>
                         <div class="dropdown-options">
                             <a href="#">Setting</a>
+                            <a href="editPassword.jsp">Change PassWord</a>
                             <a href="login.jsp">Logout</a>
                         </div>
                     </div>
@@ -251,13 +217,6 @@
 
             </c:forEach>
 
-                        <a href="/addGroup.jsp"><i class="fa-regular fa-square-plus" style="color: #000000;font-size: 30px"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="d-flex  align-items-center">
-
-            </div>
         </div>
         <div class="col-10">
             <div class="d-flex  align-items-center" id="contentTitle">
@@ -304,38 +263,6 @@
                     </div>
                 </div>
             </c:forEach>
-
-            <div class="d-flex  align-items-center">
-
-                <div class="d_flex_main">
-                    <div class="d_flex_left">
-                        <div class="project">
-                            <h2>Dự Án QLCV</h2>
-                        </div>
-                    </div>
-                    <div class="d_flex_right">
-                        <div class="d-flex align-items-center ml-auto">
-                            <a href="#" style="text-decoration: none;color: black">
-                                <i class="fa-solid fa-table" style="color: #000000; font-size: 30px; "></i>
-                                <span class="textSpan">Bảng</span>
-                            </a>
-
-                            <a href="#"  style="text-decoration: none;color: black">
-                                <i class="fa-solid fa-user-group" style="color: #000000; font-size: 30px"></i>
-                                <span class="textSpan">Thành Viên</span>
-                            </a>
-
-                            <a href="#"  style="text-decoration: none;color: black">
-                                <i class="fa-solid fa-gear" style="color: #000000; font-size: 30px"></i>
-                                <span class="textSpan">Cài Đặt</span>
-                            </a>
-                        </div>
-                    </div>
-
-                </div>
-
-            </div>
-
             <div class="d-flex  align-items-center">
                 <i class="fa-solid fa-user-group" style="color: #000000; font-size: 30px"></i>
                 <span class="textSpan">Thành Viên Các Nhóm</span>

@@ -248,7 +248,7 @@
                         <br>
                         <div class="information">
                             <label>Information</label>
-                            <input type="text" name="information" style="width: 450px;height: 100px;margin-left: 32px">
+                            <textarea name="information" style="width: 450px;height: 100px;margin-left: 32px"></textarea>
                         </div>
                         <br>
                         <br>

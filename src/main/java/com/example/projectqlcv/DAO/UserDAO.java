@@ -8,13 +8,15 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserDAO implements IUserDAO{
+public class UserDAO implements IUserDAO {
     private String connectUrl = "jdbc:mysql://localhost:3306/workManagement";
     private String userName = "root";
-    private String passWord = "giang";
+
+    private String passWord = "1";
+
 
     private static final String ADD_USER_TO_SQL = "INSERT INTO user(email, name, phoneNumber, password) VALUES(?, ?, ?, ?) ";
-    private static final String LOGIN_USER_HOME =  "SELECT * FROM user WHERE email = ? AND password = ?";
+    private static final String LOGIN_USER_HOME = "SELECT * FROM user WHERE email = ? AND password = ?";
     private static final String CHECK_USER_LOGIN = "select * from user where email = ?";
     private static final String UPDATE_PASSWORD_USER = "UPDATE user SET password = ? WHERE email = ? ";
     private static final String SELECT_PASSWORD_BY_EMAIL = "SELECT email,password FROM user WHERE email = ? AND password = ?";
@@ -23,13 +25,13 @@ public class UserDAO implements IUserDAO{
     private static final String ADD_TABLE_TO_SQL = "INSERT INTO tableWork(tableName, permission, groupDescribe) VALUES(?, ?, ?)";
     private static final String SELECT_ALL_TABLE = "SELECT * FROM tableWork";
 
-
     protected Connection connection() throws ClassNotFoundException, SQLException {
         Connection connection = null;
         Class.forName("com.mysql.cj.jdbc.Driver");
         connection = DriverManager.getConnection(connectUrl, userName, passWord);
         return connection;
     }
+  
     @Override
     public User findPasswordByEmail(String email, String password) {
         User user = null;
@@ -79,7 +81,7 @@ public class UserDAO implements IUserDAO{
                 int id = Integer.parseInt(rs.getString("id"));
                 String emailDB = rs.getString("email");
                 String passWord = rs.getString("password");
-                user= new User(id, emailDB, passWord);
+                user = new User(id, emailDB, passWord);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -108,15 +110,15 @@ public class UserDAO implements IUserDAO{
     @Override
     public User checkLoginUser(String email) {
         User user = null;
-        try(Connection connection = connection();
-            PreparedStatement preparedStatement = connection.prepareStatement(CHECK_USER_LOGIN)) {
-            preparedStatement.setString(1,email);
+        try (Connection connection = connection();
+             PreparedStatement preparedStatement = connection.prepareStatement(CHECK_USER_LOGIN)) {
+            preparedStatement.setString(1, email);
             ResultSet rs = preparedStatement.executeQuery();
-            while (rs.next()){
+            while (rs.next()) {
                 int id = rs.getInt("id");
                 String emailDB = rs.getString("email");
                 String password = rs.getString("password");
-                user = new User(id,emailDB,password);
+                user = new User(id, emailDB, password);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -125,15 +127,16 @@ public class UserDAO implements IUserDAO{
         }
         return user;
     }
+
     @Override
     public void addGroup(Group group) {
         try {
             Connection connection = connection();
             PreparedStatement preparedStatement = connection.prepareStatement(ADD_GROUP_TO_SQL);
-            preparedStatement.setString(1,group.getName());
-            preparedStatement.setString(2,group.getGroupType());
-            preparedStatement.setString(3,group.getPermission());
-            preparedStatement.setString(4,group.getInformation());
+            preparedStatement.setString(1, group.getName());
+            preparedStatement.setString(2, group.getGroupType());
+            preparedStatement.setString(3, group.getPermission());
+            preparedStatement.setString(4, group.getInformation());
             preparedStatement.executeUpdate();
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
@@ -149,13 +152,13 @@ public class UserDAO implements IUserDAO{
             Connection connection = connection();
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(SELECT_ALL_GROUP_WORK);
-            while (resultSet.next()){
+            while (resultSet.next()) {
                 int id = resultSet.getInt("id");
                 String name = resultSet.getString("name");
                 String groupType = resultSet.getString("groupType");
                 String permission = resultSet.getString("permission");
                 String information = resultSet.getString("information");
-                groups.add(new Group(id,name,groupType,permission,information));
+                groups.add(new Group(id, name, groupType, permission, information));
             }
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
@@ -170,9 +173,9 @@ public class UserDAO implements IUserDAO{
         try {
             Connection connection = connection();
             PreparedStatement preparedStatement = connection.prepareStatement(ADD_TABLE_TO_SQL);
-            preparedStatement.setString(1,table.getName());
-            preparedStatement.setString(2,table.getPermission());
-            preparedStatement.setString(3,table.getGroup());
+            preparedStatement.setString(1, table.getName());
+            preparedStatement.setString(2, table.getPermission());
+            preparedStatement.setString(3, table.getGroup());
             preparedStatement.executeUpdate();
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
@@ -188,11 +191,11 @@ public class UserDAO implements IUserDAO{
             Connection connection = connection();
             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_TABLE);
             ResultSet rs = preparedStatement.executeQuery();
-            while (rs.next()){
+            while (rs.next()) {
                 String name = rs.getString("tableName");
                 String permission = rs.getString("permission");
                 String group = rs.getString("groupDescribe");
-                listTable.add(new Table(name,permission,group));
+                listTable.add(new Table(name, permission, group));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -201,5 +204,4 @@ public class UserDAO implements IUserDAO{
         }
         return listTable;
     }
-
 }

@@ -1,10 +1,12 @@
 package com.example.projectqlcv.DAO;
 
+import com.example.projectqlcv.model.Table;
 import com.example.projectqlcv.model.User;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+
 
 public class AdminDAO implements IAdminDao {
     private String connectUrl = "jdbc:mysql://localhost:3306/workManagement";
@@ -12,19 +14,18 @@ public class AdminDAO implements IAdminDao {
     private String passWord = "giang";
 
     private static final String UPDATE_USER_ID = "UPDATE user SET name = ?, email = ? , phoneNumber = ? , password = ? , address = ? , avatar =  ? WHERE id = ? ";
-    private final String SELECT_ALL_USER_ID = "SELECT * FROM user WHERE id = ?";
+    private static final String SELECT_ALL_USER_ID = "SELECT * FROM user WHERE id = ?";
+    private static final String DELETE_USER_SQL = "delete from user where id = ?";
     private static final String SELECT_ALL_USER = "SELECT * FROM user";
     private static final String DELETE_USER_SQL = "DELETE FROM user WHERE id = ?";
 
     protected Connection connection() throws ClassNotFoundException, SQLException {
-
-
         Connection connection = null;
         Class.forName("com.mysql.cj.jdbc.Driver");
         connection = DriverManager.getConnection(connectUrl, userName, passWord);
         return connection;
     }
-
+    
     @Override
     public List<User> selectAllUser() {
         List<User> users = new ArrayList<>();
@@ -51,6 +52,21 @@ public class AdminDAO implements IAdminDao {
         return users;
     }
 
+    @Override
+    public boolean deleteUser(int id) {
+        boolean rowDeleted;
+        try (Connection connection = connection();
+             PreparedStatement statement = connection.prepareStatement(DELETE_USER_SQL);) {
+            statement.setInt(1, id);
+            rowDeleted = statement.executeUpdate() > 0;
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return rowDeleted;
+    }
+  
     @Override
     public boolean updateUser(int id, User user) {
         boolean updateRow;

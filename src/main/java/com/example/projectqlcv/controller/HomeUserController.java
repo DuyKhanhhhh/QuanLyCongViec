@@ -34,7 +34,7 @@ public class HomeUserController extends HttpServlet {
                 addGroup(request, response);
                 break;
             case "addTable":
-                addTable(request,response);
+                addTable(request, response);
                 break;
         }
     }
@@ -43,7 +43,7 @@ public class HomeUserController extends HttpServlet {
         String name = request.getParameter("name");
         String permission = request.getParameter("permission");
         String group = request.getParameter("group");
-        Table table = new Table(name,permission,group);
+        Table table = new Table(name, permission, group);
         userDAO.addGroup(table);
         try {
             response.sendRedirect("/homeUser");
@@ -77,7 +77,7 @@ public class HomeUserController extends HttpServlet {
                 showNewFormGroup(request, response);
                 break;
             case "addTable":
-                showNewFromTable(request,response);
+                showNewFromTable(request, response);
             default:
                 selectGroupFromSql(request, response);
         }
@@ -86,8 +86,8 @@ public class HomeUserController extends HttpServlet {
     private void showNewFromTable(HttpServletRequest request, HttpServletResponse response) {
         try {
             List<Table> tableList = userDAO.selectAllTable();
-            request.setAttribute("listTable",tableList);
-            request.getRequestDispatcher("homeUser.jsp").forward(request,response);
+            request.setAttribute("listTable", tableList);
+            request.getRequestDispatcher("homeUser.jsp").forward(request, response);
         } catch (ServletException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {

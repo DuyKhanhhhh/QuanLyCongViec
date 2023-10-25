@@ -2,6 +2,8 @@ package com.example.projectqlcv.controller;
 
 import com.example.projectqlcv.DAO.AdminDAO;
 import com.example.projectqlcv.DAO.IAdminDao;
+import com.example.projectqlcv.DAO.IUserDAO;
+import com.example.projectqlcv.DAO.UserDAO;
 import com.example.projectqlcv.model.User;
 
 import javax.servlet.RequestDispatcher;
@@ -13,14 +15,31 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.ArrayList;
 
 @WebServlet(name = "HomeAdminController", value = "/homeAdmin")
 public class HomeAdminController extends HttpServlet {
+
     private IAdminDao adminDao;
 
     @Override
     public void init() {
         adminDao = new AdminDAO();
+    }
+  
+    private void deleteUser(HttpServletRequest request, HttpServletResponse response) {
+        int id = Integer.parseInt(request.getParameter("id"));
+        adminDAO.deleteUser(id);
+        List<User> list = adminDAO.selectAllUser();
+        request.setAttribute("message","Delete success !");
+        request.setAttribute("listUser",list);
+        try {
+            request.getRequestDispatcher("homeAdmin.jsp").forward(request,response);
+        } catch (ServletException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -63,6 +82,8 @@ public class HomeAdminController extends HttpServlet {
         switch (user) {
             case "update":
                 showUpDateForm(request, response);
+            case "delete":
+                deleteUser(request, response);
                 break;
             case "delete":
                 deleteUser(request,response);
@@ -71,14 +92,9 @@ public class HomeAdminController extends HttpServlet {
         }
 
     }
-    private void deleteUser(HttpServletRequest request, HttpServletResponse response) {
-        int id = Integer.parseInt(request.getParameter("id"));
-        adminDao.deleteUser(id);
-        adminDao.selectAllUser();
-    }
 
     private void showAllUser(HttpServletRequest request, HttpServletResponse response) {
-        List<User> userList = adminDao.selectAllUser();
+        List<User> userList = adminDAO.selectAllUser();
         request.setAttribute("listUser", userList);
         try {
             request.getRequestDispatcher("admin/homeAdmin.jsp").forward(request, response);

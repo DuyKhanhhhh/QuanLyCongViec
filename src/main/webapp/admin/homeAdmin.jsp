@@ -41,7 +41,7 @@
                    <a href="/homeAdmin?user=update&id=${list.id}" style="margin-right: 20px; text-decoration: none" ;>
                         <i class="fa-solid fa-pen-to-square"></i>
                    </a>
-                   <a href="/homeAdmin?user=delete">
+                   <a href="/homeAdmin?user=delete&id=${list.id}">
                         <i class="fa-solid fa-trash"></i>
                    </a>
                </span>

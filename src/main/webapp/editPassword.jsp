@@ -44,8 +44,8 @@
                                 <div class="form-outline mb-4">
                                     <span class="input-group-text">
                                         <i class="fa-solid fa-envelope" style="color: #000000;font-size: 30px"></i>
-                                    <input type="email" name="email" class="form-control form-control-lg"
-                                           placeholder="Your Email" required/>
+                                    <input type="email" name="email" value="" class="form-control form-control-lg"
+                                           placeholder="Your Email " required/>
                                     </span>
                                 </div>
 

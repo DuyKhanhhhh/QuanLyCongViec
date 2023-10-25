@@ -26,11 +26,11 @@
             </tr>
             <tr>
                 <td>Phone Number :</td>
-                <td><input type="text" name="phoneNumberUd" value="${user.phoneNumber}"></td>
+                <td><input pattern="^\d{10}$"  type="text" name="phoneNumberUd" value="${user.phoneNumber}"></td>
             </tr>
             <tr>
                 <td>Password :</td>
-                <td><input type="text" name="passwordUd" value="${user.password}"></td>
+                <td><input pattern="^.{6,32}$" type="text" name="passwordUd" value="${user.password}"></td>
             </tr>
             <tr>
                 <td>Address :</td>

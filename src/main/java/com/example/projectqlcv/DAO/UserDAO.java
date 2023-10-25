@@ -11,7 +11,7 @@ import java.util.List;
 public class UserDAO implements IUserDAO{
     private String connectUrl = "jdbc:mysql://localhost:3306/workManagement";
     private String userName = "root";
-    private String passWord = "Duykhanh123@";
+    private String passWord = "giang";
 
     private static final String ADD_USER_TO_SQL = "INSERT INTO user(email, name, phoneNumber, password) VALUES(?, ?, ?, ?) ";
     private static final String LOGIN_USER_HOME =  "SELECT * FROM user WHERE email = ? AND password = ?";

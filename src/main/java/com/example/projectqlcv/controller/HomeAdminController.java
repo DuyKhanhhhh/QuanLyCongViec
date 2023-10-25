@@ -64,10 +64,17 @@ public class HomeAdminController extends HttpServlet {
             case "update":
                 showUpDateForm(request, response);
                 break;
+            case "delete":
+                deleteUser(request,response);
             default:
                 showAllUser(request, response);
         }
 
+    }
+    private void deleteUser(HttpServletRequest request, HttpServletResponse response) {
+        int id = Integer.parseInt(request.getParameter("id"));
+        adminDao.deleteUser(id);
+        adminDao.selectAllUser();
     }
 
     private void showAllUser(HttpServletRequest request, HttpServletResponse response) {
@@ -95,4 +102,5 @@ public class HomeAdminController extends HttpServlet {
             throw new RuntimeException(e);
         }
     }
+
 }

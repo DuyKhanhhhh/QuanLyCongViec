@@ -11,4 +11,5 @@ public interface IAdminDao {
     boolean updateUser(int id, User user);
 
     User findById(int id);
+    boolean deleteUser(int id);
 }

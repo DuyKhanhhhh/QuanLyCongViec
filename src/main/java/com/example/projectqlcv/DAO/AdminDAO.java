@@ -14,6 +14,7 @@ public class AdminDAO implements IAdminDao {
     private static final String UPDATE_USER_ID = "UPDATE user SET name = ?, email = ? , phoneNumber = ? , password = ? , address = ? , avatar =  ? WHERE id = ? ";
     private final String SELECT_ALL_USER_ID = "SELECT * FROM user WHERE id = ?";
     private static final String SELECT_ALL_USER = "SELECT * FROM user";
+    private static final String DELETE_USER_SQL = "DELETE FROM user WHERE id = ?";
 
     protected Connection connection() throws ClassNotFoundException, SQLException {
 
@@ -94,5 +95,19 @@ public class AdminDAO implements IAdminDao {
             throw new RuntimeException(e);
         }
         return user;
+    }
+    @Override
+    public boolean deleteUser(int id) {
+        boolean rowDeleted;
+        try (Connection connection = connection();
+             PreparedStatement statement = connection.prepareStatement(DELETE_USER_SQL);) {
+            statement.setInt(1, id);
+            rowDeleted = statement.executeUpdate() > 0;
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return rowDeleted;
     }
 }

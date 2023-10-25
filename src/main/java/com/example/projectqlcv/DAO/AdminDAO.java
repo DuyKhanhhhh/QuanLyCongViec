@@ -6,7 +6,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AdminDAO implements IAdminDao {
+public class AdminDAO implements IAdminDAO {
     private String connectUrl = "jdbc:mysql://localhost:3306/workManagement";
     private String userName = "root";
     private String passWord = "giang";

@@ -1,7 +1,7 @@
 package com.example.projectqlcv.controller;
 
 import com.example.projectqlcv.DAO.AdminDAO;
-import com.example.projectqlcv.DAO.IAdminDao;
+import com.example.projectqlcv.DAO.IAdminDAO;
 import com.example.projectqlcv.model.User;
 
 import javax.servlet.RequestDispatcher;
@@ -11,16 +11,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.List;
 
 @WebServlet(name = "HomeAdminController", value = "/homeAdmin")
 public class HomeAdminController extends HttpServlet {
-    private IAdminDao adminDao;
+    private IAdminDAO adminDAO;
 
     @Override
     public void init() {
-        adminDao = new AdminDAO();
+        adminDAO = new AdminDAO();
     }
 
     @Override
@@ -46,7 +45,7 @@ public class HomeAdminController extends HttpServlet {
         String address = request.getParameter("addressUd");
         String avatar = request.getParameter("avatarUd");
         User user = new User(name, email, phoneNumber, password, address, avatar);
-        adminDao.updateUser(id, user);
+        adminDAO.updateUser(id, user);
         try {
             response.sendRedirect("/homeAdmin");
         } catch (IOException e) {
@@ -73,12 +72,12 @@ public class HomeAdminController extends HttpServlet {
     }
     private void deleteUser(HttpServletRequest request, HttpServletResponse response) {
         int id = Integer.parseInt(request.getParameter("id"));
-        adminDao.deleteUser(id);
-        adminDao.selectAllUser();
+        adminDAO.deleteUser(id);
+        adminDAO.selectAllUser();
     }
 
     private void showAllUser(HttpServletRequest request, HttpServletResponse response) {
-        List<User> userList = adminDao.selectAllUser();
+        List<User> userList = adminDAO.selectAllUser();
         request.setAttribute("listUser", userList);
         try {
             request.getRequestDispatcher("admin/homeAdmin.jsp").forward(request, response);
@@ -91,7 +90,7 @@ public class HomeAdminController extends HttpServlet {
 
     private void showUpDateForm(HttpServletRequest request, HttpServletResponse response) {
         int id = Integer.parseInt(request.getParameter("id"));
-        User user = adminDao.findById(id);
+        User user = adminDAO.findById(id);
         request.setAttribute("user", user);
         RequestDispatcher dispatcher = request.getRequestDispatcher("admin/update.jsp");
         try {

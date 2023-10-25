@@ -13,17 +13,19 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <script src="https://kit.fontawesome.com/892d14366e.js" crossorigin="anonymous"></script>
+
 </head>
 <body>
 <table class="table table-striped">
     <tr>
         <th>Id</th>
-        <th>Email</th>
         <th>Name</th>
+        <th>Email</th>
         <th>Phone</th>
         <th>Password</th>
         <th>Address</th>
         <th>Avatar</th>
+        <th>Actions</th>
     </tr>
     <c:forEach var="list" items="${listUser}">
         <tr>
@@ -34,6 +36,16 @@
             <td>${list.password}</td>
             <td>${list.address}</td>
             <td><img src="${list.avatar}" alt="Avatar"></td>
+            <td>
+               <span class="input-group">
+                   <a href="/homeAdmin?user=update&id=${list.id}" style="margin-right: 20px; text-decoration: none" ;>
+                        <i class="fa-solid fa-pen-to-square"></i>
+                   </a>
+                   <a href="/homeAdmin?user=delete">
+                        <i class="fa-solid fa-trash"></i>
+                   </a>
+               </span>
+            </td>
         </tr>
     </c:forEach>
 </table>

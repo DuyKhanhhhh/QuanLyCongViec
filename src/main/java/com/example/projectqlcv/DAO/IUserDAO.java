@@ -24,5 +24,5 @@ public interface IUserDAO {
     void addGroup(Table table);
 
     List<Table> selectAllTable();
-
+    boolean editInformationUser(int id ,User user);
 }

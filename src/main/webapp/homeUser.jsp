@@ -179,7 +179,7 @@
                         <button>Name</button>
                         <div class="dropdown-options">
                             <a href="#">Setting</a>
-                            <a href="editPassword.jsp">Change PassWord</a>
+                            <a href="/updatePassword?login=updatePassword&id=${user.id}">Change PassWord</a>
                             <a href="login.jsp">Logout</a>
                         </div>
                     </div>
@@ -255,7 +255,7 @@
                         <div class="table_create">
                             <h4 style="text-align: center;margin-top: 33%"><c:out value="${listTable.name}"/></h4>
                         </div>
-                        <a href="addTable.jsp" style="text-decoration: none; color: black">
+                        <a href="home/addTable.jsp" style="text-decoration: none; color: black">
                             <div class="table_create">
                                 <h4 style="text-align: center;margin-top: 33%">Tạo Bảng Mới</h4>
                             </div>

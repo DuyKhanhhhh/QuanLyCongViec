@@ -9,10 +9,11 @@ import java.util.List;
 public interface IUserDAO {
     User login(String userName, String password);
 
-    void signUp(String email, String password, String name, String phone);
+    void signUp(String email, String password, String name, String phoneNumber);
 
     User checkLoginUser(String email);
     User findPasswordByEmail(String email, String password);
+    User findUserById(int id);
 
     void editPassWordUser(String email, String rePassword);
 

@@ -41,13 +41,10 @@
                             </script>
                             <form action="/updatePassword?login=updatePassword" method="post">
 
-                                <div class="form-outline mb-4">
-                                    <span class="input-group-text">
-                                        <i class="fa-solid fa-envelope" style="color: #000000;font-size: 30px"></i>
-                                    <input type="email" name="email" value="" class="form-control form-control-lg"
+
+                                    <input type="hidden" name="email" value="${user.email}" class="form-control form-control-lg"
                                            placeholder="Your Email " required/>
-                                    </span>
-                                </div>
+
 
                                 <div class="form-outline mb-4">
                                       <span class="input-group-text">

@@ -179,7 +179,7 @@
                         <button>Name</button>
                         <div class="dropdown-options">
                             <a href="#">Setting</a>
-                            <a href="editPassword.jsp">Change PassWord</a>
+                            <a href="/homeUser?action=updatePassword&id=${user.id}">Change PassWord</a>
                             <a href="login.jsp">Logout</a>
                         </div>
                     </div>

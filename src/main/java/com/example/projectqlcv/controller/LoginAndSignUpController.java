@@ -45,15 +45,14 @@ public class LoginAndSignUpController extends HttpServlet {
                 request.setAttribute("message", "Wrong email or password!");
                 request.getRequestDispatcher("login.jsp").forward(request, response);
             } else {
-
-                response.sendRedirect("/homeUser");
+                request.setAttribute("user",user);
+                request.getRequestDispatcher("homeUser.jsp").forward(request,response);
             }
         } catch (ServletException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
     }
 
 

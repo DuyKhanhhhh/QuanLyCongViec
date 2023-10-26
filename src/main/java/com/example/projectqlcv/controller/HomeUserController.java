@@ -4,6 +4,7 @@ import com.example.projectqlcv.DAO.IUserDAO;
 import com.example.projectqlcv.DAO.UserDAO;
 import com.example.projectqlcv.model.Group;
 import com.example.projectqlcv.model.Table;
+import com.example.projectqlcv.model.User;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -24,7 +25,7 @@ public class HomeUserController extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
         if (action == null) {
             action = "";
@@ -36,7 +37,31 @@ public class HomeUserController extends HttpServlet {
             case "addTable":
                 addTable(request, response);
                 break;
+            case "updatePassword":
+                changePassword(request, response);
+                break;
         }
+    }
+    private void changePassword(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        int id = Integer.parseInt(request.getParameter("id"));
+        String password = request.getParameter("password");
+        String newPassword = request.getParameter("newPassword");
+        String confirmPassword = request.getParameter("confirmPassword");
+        User user = userDAO.findPasswordById(id);
+        if (user != null) {
+            if (newPassword.equals(confirmPassword) && !password.equals(newPassword)) {
+                userDAO.editPassWordUser(user);
+                request.setAttribute("message", "Update success !");
+                request.getRequestDispatcher("login.jsp").forward(request, response);
+            } else {
+                request.setAttribute("message", "Erorr Password Not Synchronized !");
+                request.getRequestDispatcher("editPassword.jsp").forward(request, response);
+            }
+        } else {
+            request.setAttribute("message", "Wrong email or password !");
+            request.getRequestDispatcher("editPassword.jsp").forward(request, response);
+        }
+
     }
 
     private void addTable(HttpServletRequest request, HttpServletResponse response) {
@@ -67,7 +92,7 @@ public class HomeUserController extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
         if (action == null) {
             action = "";
@@ -78,9 +103,20 @@ public class HomeUserController extends HttpServlet {
                 break;
             case "addTable":
                 showNewFromTable(request, response);
+                break;
+            case "updatePassword":
+                showNewFormEdit(request,response);
+                break;
             default:
                 selectGroupFromSql(request, response);
         }
+    }
+
+    private void showNewFormEdit(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        int id = Integer.parseInt(request.getParameter("id"));
+        User user = userDAO.findPasswordById(id);
+        request.setAttribute("user",user);
+        request.getRequestDispatcher("editPassword.jsp").forward(request,response);
     }
 
     private void showNewFromTable(HttpServletRequest request, HttpServletResponse response) {

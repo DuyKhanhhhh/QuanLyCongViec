@@ -17,9 +17,9 @@ public class AdminDAO implements IAdminDAO {
     private static final String SELECT_ALL_USER_ID = "SELECT * FROM user WHERE id = ?";
     private static final String DELETE_USER_SQL = "delete from user where id = ?";
     private static final String SELECT_ALL_USER = "SELECT * FROM user";
-    private static final String CHECK_USER_LOGIN = "select * from user where email = ?";
-
-
+    private static final String ADD_USER_TO_SQL = "INSERT INTO user(email, name, phoneNumber, password) VALUES(?, ?, ?, ?) ";
+    private static final String CHECK_ADMIN_LOGIN = "select * from user where email = ?";
+  
     protected Connection connection() throws ClassNotFoundException, SQLException {
         Connection connection = null;
         Class.forName("com.mysql.cj.jdbc.Driver");
@@ -54,25 +54,10 @@ public class AdminDAO implements IAdminDAO {
     }
 
     @Override
-    public void createUser(String email, String password, String name, String phoneNumber) {
-        try (Connection connection = connection();
-             PreparedStatement preparedStatement = connection.prepareStatement(ADD_USER_TO_SQL);) {
-            preparedStatement.setString(1, email);
-            preparedStatement.setString(2, name);
-            preparedStatement.setString(3, phoneNumber);
-            preparedStatement.setString(4, password);
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-    }
-    @Override
     public User checkLoginUser(String email) {
         User user = null;
         try (Connection connection = connection();
-             PreparedStatement preparedStatement = connection.prepareStatement(CHECK_USER_LOGIN)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(CHECK_ADMIN_LOGIN)) {
             preparedStatement.setString(1, email);
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
@@ -88,6 +73,7 @@ public class AdminDAO implements IAdminDAO {
         }
         return user;
     }
+  
 
     @Override
     public boolean deleteUser(int id) {
@@ -102,6 +88,22 @@ public class AdminDAO implements IAdminDAO {
             throw new RuntimeException(e);
         }
         return rowDeleted;
+    }
+
+    @Override
+    public void createUser(String email, String password, String name, String phoneNumber) {
+        try (Connection connection = connection();
+             PreparedStatement preparedStatement = connection.prepareStatement(ADD_USER_TO_SQL);) {
+            preparedStatement.setString(1, email);
+            preparedStatement.setString(2, name);
+            preparedStatement.setString(3, phoneNumber);
+            preparedStatement.setString(4, password);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

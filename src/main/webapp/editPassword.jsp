@@ -39,8 +39,11 @@
                                     document.querySelector(".alert").remove();
                                 }, 3000);
                             </script>
-                            <form method="post">
+                            <form action="/updatePassword?login=updatePassword" method="post">
 
+
+                                    <input type="hidden" name="email" value="${user.email}" class="form-control form-control-lg"
+                                           placeholder="Your Email " required/>
                                 <div class="form-outline mb-4">
                                       <span class="input-group-text">
                                           <i class="fa-solid fa-lock" style="color: #000000; font-size: 30px"></i>

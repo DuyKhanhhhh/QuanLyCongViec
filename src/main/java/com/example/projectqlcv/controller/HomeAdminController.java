@@ -14,6 +14,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 import java.util.ArrayList;
@@ -33,7 +34,7 @@ public class HomeAdminController extends HttpServlet {
         request.setAttribute("message", "Delete success !");
         request.setAttribute("listUser", list);
         try {
-            request.getRequestDispatcher("homeAdmin.jsp").forward(request, response);
+            request.getRequestDispatcher("admin/homeAdmin.jsp").forward(request, response);
         } catch (ServletException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {
@@ -59,8 +60,9 @@ public class HomeAdminController extends HttpServlet {
                     request.getRequestDispatcher("/homeAdmin").forward(request, response);
                 }
             } else {
-                request.setAttribute("message", "Duplicate email please re-enter !");
-                request.getRequestDispatcher("admin/create.jsp").forward(request, response);
+                HttpSession session = request.getSession();
+                session.setAttribute("message", "Create success !");
+                response.sendRedirect("/homeAdmin");
             }
 
         } catch (ServletException e) {
@@ -98,7 +100,7 @@ public class HomeAdminController extends HttpServlet {
         User user = new User(name, email, phoneNumber, password, address, avatar);
         adminDAO.updateUser(id, user);
         try {
-            response.sendRedirect("admin/homeAdmin.jsp");
+            response.sendRedirect("/homeAdmin");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

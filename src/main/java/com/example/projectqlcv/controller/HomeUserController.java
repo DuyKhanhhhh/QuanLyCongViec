@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @WebServlet(name = "AddGroupController", value = "/homeUser")
@@ -20,7 +22,7 @@ public class HomeUserController extends HttpServlet {
     private IUserDAO userDAO;
 
     @Override
-    public void init() throws ServletException {
+    public void init() {
         userDAO = new UserDAO();
     }
 
@@ -104,9 +106,6 @@ public class HomeUserController extends HttpServlet {
             case "addTable":
                 showNewFromTable(request, response);
                 break;
-            case "updatePassword":
-                showNewFormEdit(request,response);
-                break;
             default:
                 selectGroupFromSql(request, response);
         }
@@ -123,7 +122,7 @@ public class HomeUserController extends HttpServlet {
         try {
             List<Table> tableList = userDAO.selectAllTable();
             request.setAttribute("listTable", tableList);
-            request.getRequestDispatcher("homeUser.jsp").forward(request, response);
+            request.getRequestDispatcher("home/addTable.jsp").forward(request, response);
         } catch (ServletException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {
@@ -132,7 +131,7 @@ public class HomeUserController extends HttpServlet {
     }
 
     private void showNewFormGroup(HttpServletRequest request, HttpServletResponse response) {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("addGroup.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("home/addGroup.jsp");
         try {
             dispatcher.forward(request, response);
         } catch (ServletException e) {
@@ -144,6 +143,12 @@ public class HomeUserController extends HttpServlet {
 
     private void selectGroupFromSql(HttpServletRequest request, HttpServletResponse response) {
         List<Group> groups = userDAO.selectGroupFromSQL();
+        Collections.sort(groups, new Comparator<Group>() {
+            @Override
+            public int compare(Group group1, Group group2) {
+                return group1.getName().compareToIgnoreCase(group2.getName());
+            }
+        });
         request.setAttribute("groups", groups);
         RequestDispatcher dispatcher = request.getRequestDispatcher("homeUser.jsp");
         try {
@@ -154,5 +159,4 @@ public class HomeUserController extends HttpServlet {
             throw new RuntimeException(e);
         }
     }
-
 }

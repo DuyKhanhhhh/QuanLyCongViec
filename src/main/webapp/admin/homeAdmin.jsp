@@ -16,6 +16,7 @@
 
 </head>
 <body>
+<a href="/homeUser">Back</a>
 <c:if test="${message != null}">
     <div class="alert alert-success" role="alert">
             ${message}

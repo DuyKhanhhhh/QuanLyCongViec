@@ -177,8 +177,8 @@
                         <button>Name</button>
                         <div class="dropdown-options">
                             <a href="#">Setting</a>
-                            <a href="editPassword.jsp">Change PassWord</a>
-                            <a href="login.jsp">Logout</a>
+                            <a href="../editPassword.jsp">Change PassWord</a>
+                            <a href="../login.jsp">Logout</a>
                         </div>
                     </div>
                     </div>
@@ -221,13 +221,13 @@
                         <br>
                         <br>
                         <div class="name">
-                            <label>Name </label>
+                            <label>Name(*) </label>
                             <input type="text" name="name" style="width: 450px;height: 40px;margin-left: 32px" required>
                         </div>
                         <br>
                         <div class="select">
                             <div class="group_type">
-                                <label>Group Type</label>
+                                <label>Group Type(*)</label>
                                 <select name="groupType" style="width: 210px; height: 40px;margin-left: 25px" required>
                                     <option></option>
                                     <option>1</option>
@@ -236,7 +236,7 @@
                                 </select>
                             </div>
                             <div class="permission">
-                                <label>Permission</label>
+                                <label>Permission(*)</label>
                                 <select name="permission" style="width: 210px;height: 40px;margin-left: 36px" required>
                                     <option></option>
                                     <option>Public</option>

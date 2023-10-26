@@ -11,10 +11,11 @@ import java.util.List;
 public class UserDAO implements IUserDAO {
     private String connectUrl = "jdbc:mysql://localhost:3306/workManagement";
     private String userName = "root";
-    private String passWord = "1";
-
+    private String passWord = "giang";
+  
     private static final String ADD_USER_TO_SQL = "INSERT INTO user(email, name, phoneNumber, password) VALUES(?, ?, ?, ?) ";
     private static final String LOGIN_USER_HOME = "SELECT * FROM user WHERE email = ? AND password = ?";
+    private static final String SELECT_USER_ID = "SELECT email FROM user WHERE id = ?";
     private static final String CHECK_USER_LOGIN = "select * from user where email = ?";
     private static final String UPDATE_PASSWORD_USER = "UPDATE user SET password = ? WHERE id = ? ";
     private static final String SELECT_PASSWORD_BY_ID = "SELECT id, password FROM user WHERE id = ?";
@@ -53,7 +54,27 @@ public class UserDAO implements IUserDAO {
     }
 
     @Override
-    public void editPassWordUser(User user) {
+    public User findUserById(int id) {
+        User user = null;
+        try{
+            Connection connection =connection();
+            PreparedStatement preparedStatement = connection.prepareStatement(SELECT_USER_ID);
+            preparedStatement.setInt(1,id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()){
+                String email = resultSet.getString("email");
+                user = new User(email);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        return user;
+    }
+
+    @Override
+    public void editPassWordUser(String email, String rePassword) {
         Connection connection = null;
         try {
             connection = connection();
@@ -102,6 +123,7 @@ public class UserDAO implements IUserDAO {
             throw new RuntimeException(e);
         }
     }
+
 
     @Override
     public User checkLoginUser(String email) {

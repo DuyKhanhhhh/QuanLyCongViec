@@ -11,16 +11,14 @@ import java.util.List;
 public class UserDAO implements IUserDAO {
     private String connectUrl = "jdbc:mysql://localhost:3306/workManagement";
     private String userName = "root";
-
     private String passWord = "giang";
-
-
+  
     private static final String ADD_USER_TO_SQL = "INSERT INTO user(email, name, phoneNumber, password) VALUES(?, ?, ?, ?) ";
     private static final String LOGIN_USER_HOME = "SELECT * FROM user WHERE email = ? AND password = ?";
     private static final String SELECT_USER_ID = "SELECT email FROM user WHERE id = ?";
     private static final String CHECK_USER_LOGIN = "select * from user where email = ?";
-    private static final String UPDATE_PASSWORD_USER = "UPDATE user SET password = ? WHERE email = ? ";
-    private static final String SELECT_PASSWORD_BY_EMAIL = "SELECT email,password FROM user WHERE email = ? AND password = ?";
+    private static final String UPDATE_PASSWORD_USER = "UPDATE user SET password = ? WHERE id = ? ";
+    private static final String SELECT_PASSWORD_BY_ID = "SELECT id, password FROM user WHERE id = ?";
     private static final String ADD_GROUP_TO_SQL = "INSERT INTO groupWork(name,groupType,permission,information) VALUES(?,?,?,?)";
     private static final String SELECT_ALL_GROUP_WORK = "SELECT * FROM groupWork";
     private static final String ADD_TABLE_TO_SQL = "INSERT INTO tableWork(tableName, permission, groupDescribe) VALUES(?, ?, ?)";
@@ -34,19 +32,18 @@ public class UserDAO implements IUserDAO {
     }
   
     @Override
-    public User findPasswordByEmail(String email, String password) {
+    public User findPasswordById(int id) {
         User user = null;
         Connection connection = null;
         try {
             connection = connection();
-            PreparedStatement preparedStatement = connection.prepareStatement(SELECT_PASSWORD_BY_EMAIL);
-            preparedStatement.setString(1, email);
-            preparedStatement.setString(2, password);
+            PreparedStatement preparedStatement = connection.prepareStatement(SELECT_PASSWORD_BY_ID);
+            preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                String emailUser = resultSet.getString("email");
+                int idDB = resultSet.getInt("id") ;
                 String passwordUser = resultSet.getString("password");
-                user = new User(emailUser, passwordUser);
+                user = new User(idDB , passwordUser);
             }
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
@@ -82,8 +79,7 @@ public class UserDAO implements IUserDAO {
         try {
             connection = connection();
             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_PASSWORD_USER);
-            preparedStatement.setString(1, rePassword);
-            preparedStatement.setString(2, email);
+            preparedStatement.setString(1,user.getPassword());
             preparedStatement.executeUpdate();
         } catch (ClassNotFoundException | SQLException e) {
             throw new RuntimeException(e);

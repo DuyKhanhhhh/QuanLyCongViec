@@ -12,10 +12,12 @@ public interface IUserDAO {
     void signUp(String email, String password, String name, String phoneNumber);
 
     User checkLoginUser(String email);
+  
     User findPasswordByEmail(String email, String password);
+  
     User findUserById(int id);
 
-    void editPassWordUser(String email, String rePassword);
+    void editPassWordUser(User user);
 
     void addGroup(Group group);
 

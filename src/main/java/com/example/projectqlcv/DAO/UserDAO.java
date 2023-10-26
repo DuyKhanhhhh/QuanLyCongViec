@@ -62,7 +62,7 @@ public class UserDAO implements IUserDAO {
         User user = null;
         try {
             Connection connection = connection();
-            PreparedStatement preparedStatement = connection.prepareStatement(SELECT_USER_ID);
+PreparedStatement preparedStatement = connection.prepareStatement(SELECT_USER_ID);
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
@@ -134,7 +134,7 @@ public class UserDAO implements IUserDAO {
         try (Connection connection = connection(); PreparedStatement preparedStatement = connection.prepareStatement(CHECK_USER_LOGIN)) {
             preparedStatement.setString(1, email);
             ResultSet rs = preparedStatement.executeQuery();
-            while (rs.next()) {
+while (rs.next()) {
                 int id = rs.getInt("id");
                 String emailDB = rs.getString("email");
                 String password = rs.getString("password");
@@ -209,7 +209,7 @@ public class UserDAO implements IUserDAO {
         List<Table> listTable = new ArrayList<>();
         try {
             Connection connection = connection();
-            PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_TABLE);
+PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_TABLE);
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
                 String name = rs.getString("tableName");

@@ -88,6 +88,8 @@ public class HomeUserController extends HttpServlet {
         String information = request.getParameter("information");
         Group group = new Group(name, groupType, permission, information);
         userDAO.addGroup(group);
+        HttpSession session = request.getSession();
+        session.setAttribute("message","Add group success !");
         try {
             response.sendRedirect("/homeUser");
         } catch (IOException e) {

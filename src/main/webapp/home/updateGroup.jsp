@@ -26,17 +26,12 @@
 
     #boxLeft {
         background-color: #b4b4b4;
+        height: 900px;
     }
 
     .textSpan {
         font-size: 30px;
         margin-left: 20px;
-    }
-
-    .icon {
-        text-decoration: none;
-        color: black;
-        margin-right: 18px;
     }
 
     #contentTitle {
@@ -64,19 +59,6 @@
         height: 3rem;
         margin-left: 1rem;
         margin-top: 1rem;
-    }
-
-    .d_flex_left {
-        width: 50%;
-        height: auto;
-        float: left;
-    }
-
-    .d_flex_right {
-        width: 50%;
-        height: auto;
-        float: left;
-        padding-left: 13rem;
     }
 
     .dropdown {
@@ -116,7 +98,6 @@
         padding: 5px;
         text-decoration: none;
         padding: 20px 20px;
-        text-align: center;
     }
 
     .dropdown-options a:hover {
@@ -125,31 +106,49 @@
         border-radius: 5px;
     }
 
-    .group_main {
-        width: 100%;
-        height: 250px;
-        margin-bottom: 10px;
+    .main_input {
+        width: 75%;
+        height: 700px;
+        border: 5px solid black;
+        border-radius: 10px;
+        margin: 10px;
     }
 
-    .name_group {
-        width: 90%;
+    .col-10 {
+        text-align: center;
+    }
+
+    .select {
+        width: 450px;
+        height: 70px;
+        margin: 0 auto;
+    }
+
+    .group_type {
+        width: 50%;
         height: 40px;
-        margin-bottom: 8px;
-        margin-left: 10%;
+        float: left;
     }
 
-    .group_header {
-        width: 100%;
-        height: 3rem;
+    .permission {
+        width: 50%;
+        height: 40px;
+        float: left;
+    }
+    .title_h2{
+        margin-top: 40px;
+    }
+    .information{
+        width: 470px;
+        height: 140px;
+        margin: 0 auto;
+    }
+    .name{
+        width: 470px;
+        height: 70px;
+        margin: 0 auto;
     }
 
-    .group_content {
-        margin-top: 5px;
-        width: 210px;
-        height: 160px;
-        border-radius: 40px;
-        border: 1px solid black;
-    }
 
 </style>
 <body>
@@ -158,16 +157,16 @@
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container-fluid">
                 <div class="headImg">
-                    <img src="https://png.pngtree.com/png-vector/20190624/ourlarge/pngtree-managementprocessproductiontaskwork-flat-color-icon-vect-png-image_1492738.jpg"
-                         width="70px" height="60px">
+                    <img src="https://png.pngtree.com/png-vector/20190624/ourlarge/pngtree-managementprocessproductiontaskwork-flat-color-icon-vect-png-image_1492738.jpg" width="70px"
+                         height="60px">
                 </div>
                 <div class="collapse navbar-collapse">
                     <div class="dropdown">
                         <button>Group</button>
                         <div class="dropdown-options">
-                            <a href="#">123</a>
-                            <a href="#">456</a>
-                            <a href="#">6576</a>
+                            <a href="#">?</a>
+                            <a href="#">?</a>
+                            <a href="#">?</a>
                         </div>
                     </div>
                 </div>
@@ -179,8 +178,8 @@
                         <button>Name</button>
                         <div class="dropdown-options">
                             <a href="#">Setting</a>
-                            <a href="/updatePassword?login=updatePassword&id=${user.id}">Change PassWord</a>
-                            <a href="login.jsp">Logout</a>
+                            <a href="../editPassword.jsp">Change PassWord</a>
+                            <a href="../login.jsp">Logout</a>
                         </div>
                     </div>
                     </div>
@@ -194,14 +193,14 @@
             <div class="table">
                 <div class="d-flex align-items-center">
                     <i class="fa-solid fa-table" style="color: #000000; font-size: 30px;"></i>
-                    <span class="textSpan">Bảng</span>
+                    <span class="textSpan">Table</span>
                 </div>
             </div>
             <div class="group">
                 <div class="d-flex  align-items-center">
                     <div class="group_name">
                         <i class="fa-solid fa-user-group" style="color: #000000; font-size: 30px"></i>
-                        <span class="textSpan">Nhóm</span>
+                        <span class="textSpan">Group</span>
                     </div>
                     <div class="group_add">
                         <a href="/homeUser?action=addGroup">
@@ -210,62 +209,59 @@
                     </div>
                 </div>
             </div>
-            <c:forEach var="group" items="${groups}">
-                <div class="name_group">
-                    <h2>${group.name}</h2>
-                </div>
-
-            </c:forEach>
-
-        </div>
-        <div class="col-10">
-            <div class="d-flex  align-items-center" id="contentTitle">
-                <i class="fa-solid fa-user-group" style="color: #000000; font-size: 30px"></i>
-                <span class="textSpan">Nhóm Của Bạn</span>
-            </div>
-            <c:forEach var="group" items="${groups}">
-                <div class="group_main">
-                    <div class="group_header">
-                        <div class="d_flex_left">
-                            <div class="project">
-                                <h2>${group.name}</h2>
-                            </div>
-                        </div>
-                        <div class="d_flex_right">
-                            <div class="d-flex align-items-center ml-auto">
-                                <a href="#" class="icon">
-                                    <i class="fa-solid fa-table" style="color: #000000; font-size: 30px; "></i>
-                                    <span style="font-size: 30px">Bảng</span>
-                                </a>
-
-                                <a href="#" class="icon">
-                                    <i class="fa-solid fa-user-group" style="color: #000000; font-size: 30px"></i>
-                                    <span style="font-size: 30px">Thành Viên</span>
-                                </a>
-
-                                <a href="homeUser?action=updateGroup&id=${group.id}" class="icon">
-                                    <i class="fa-solid fa-gear" style="color: #000000; font-size: 30px"></i>
-                                    <span style="font-size: 30px">Cài Đặt</span>
-                                </a>
-                            </div>
-
-                        </div>
-                    </div>
-                    <div class="group_content">
-                        <div class="table_create">
-                            <h4 style="text-align: center;margin-top: 33%"><c:out value="${listTable.name}"/></h4>
-                        </div>
-                        <a href="home/addTable.jsp" style="text-decoration: none; color: black">
-                            <div class="table_create">
-                                <h4 style="text-align: center;margin-top: 33%">Tạo Bảng Mới</h4>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            </c:forEach>
             <div class="d-flex  align-items-center">
-                <i class="fa-solid fa-user-group" style="color: #000000; font-size: 30px"></i>
-                <span class="textSpan">Thành Viên Các Nhóm</span>
+
+            </div>
+        </div>
+        <div class="main_input">
+            <div class="col-10">
+                <form method="post" action="/homeUser?action=updateGroup">
+                    <div>
+                        <div class="title_h2">
+                            <h2>Create Group</h2>
+                        </div>
+                        <br>
+                        <br>
+                        <c:if test="${listGroup != null}">
+                            <input type="hidden" name="id" value="<c:out value='${listGroup.id}' />"/>
+                        </c:if>
+                        <div class="name">
+                            <label>Name(*) </label>
+                            <input type="text" name="name" style="width: 450px;height: 40px;margin-left: 32px" value="<c:out value='${listGroup.name}'/>" required>
+                        </div>
+                        <br>
+                        <div class="select">
+                            <div class="group_type">
+                                <label>Group Type(*)</label>
+                                <select name="groupType" style="width: 210px; height: 40px;margin-left: 25px" required>
+                                    <option></option>
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                </select>
+                            </div>
+                            <div class="permission">
+                                <label>Permission(*)</label>
+                                <select name="permission" style="width: 210px;height: 40px;margin-left: 36px" required>
+                                    <option></option>
+                                    <option>Public</option>
+                                    <option>Private</option>
+                                </select>
+                            </div>
+                        </div>
+                        <br>
+                        <br>
+                        <div class="information">
+                            <label>Information</label>
+                            <input type="text" name="information" style="width: 450px;height: 100px;margin-left: 32px" value="<c:out value='${listGroup.information}'/>">
+                        </div>
+                        <br>
+                        <br>
+                        <div>
+                            <button type="submit" style="width: 250px">Submit</button>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

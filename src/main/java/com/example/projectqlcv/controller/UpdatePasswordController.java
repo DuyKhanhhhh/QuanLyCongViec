@@ -30,7 +30,7 @@ public class UpdatePasswordController extends HttpServlet {
         }
         switch (login) {
             case "updatePassword":
-//                changePassword(request, response);
+                changePassword(request, response);
                 break;
         }
     }

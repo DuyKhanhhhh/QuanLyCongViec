@@ -36,42 +36,23 @@ public class HomeUserController extends HttpServlet {
             case "addGroup":
                 addGroup(request, response);
                 break;
+            case "updateGroup":
+                updateGroup(request,response);
+                break;
             case "addTable":
                 addTable(request, response);
                 break;
-            case "updatePassword":
-                changePassword(request, response);
-                break;
         }
     }
-    private void changePassword(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+    private void updateGroup(HttpServletRequest request, HttpServletResponse response) {
         int id = Integer.parseInt(request.getParameter("id"));
-        String password = request.getParameter("password");
-        String newPassword = request.getParameter("newPassword");
-        String confirmPassword = request.getParameter("confirmPassword");
-        User user = userDAO.findPasswordById(id);
-        if (user != null) {
-            if (newPassword.equals(confirmPassword) && !password.equals(newPassword)) {
-                userDAO.editPassWordUser(user);
-                request.setAttribute("message", "Update success !");
-                request.getRequestDispatcher("login.jsp").forward(request, response);
-            } else {
-                request.setAttribute("message", "Erorr Password Not Synchronized !");
-                request.getRequestDispatcher("editPassword.jsp").forward(request, response);
-            }
-        } else {
-            request.setAttribute("message", "Wrong email or password !");
-            request.getRequestDispatcher("editPassword.jsp").forward(request, response);
-        }
-
-    }
-
-    private void addTable(HttpServletRequest request, HttpServletResponse response) {
         String name = request.getParameter("name");
-        String permission = request.getParameter("permission");
         String group = request.getParameter("group");
-        Table table = new Table(name, permission, group);
-        userDAO.addGroup(table);
+        String permission = request.getParameter("permission");
+        String information = request.getParameter("information");
+        Group groups = new Group(name,group,permission,information);
+        userDAO.updateGroup(id,groups);
         try {
             response.sendRedirect("/homeUser");
         } catch (IOException e) {
@@ -79,6 +60,18 @@ public class HomeUserController extends HttpServlet {
         }
     }
 
+    private void addTable(HttpServletRequest request, HttpServletResponse response) {
+        String name = request.getParameter("name");
+        String permission = request.getParameter("permission");
+        String group = request.getParameter("group");
+        Table table = new Table(name, permission, group);
+        userDAO.addTable(table);
+        try {
+            response.sendRedirect("/homeUser");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
     private void addGroup(HttpServletRequest request, HttpServletResponse response) {
         String name = request.getParameter("name");
         String groupType = request.getParameter("groupType");
@@ -103,6 +96,12 @@ public class HomeUserController extends HttpServlet {
             case "addGroup":
                 showNewFormGroup(request, response);
                 break;
+            case "updateGroup":
+                showUpdateGroup(request,response);
+                break;
+            case "delete":
+                deleteGroup(request,response);
+                break;
             case "addTable":
                 showNewFromTable(request, response);
                 break;
@@ -111,11 +110,28 @@ public class HomeUserController extends HttpServlet {
         }
     }
 
-    private void showNewFormEdit(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private void deleteGroup(HttpServletRequest request, HttpServletResponse response) {
         int id = Integer.parseInt(request.getParameter("id"));
-        User user = userDAO.findPasswordById(id);
-        request.setAttribute("user",user);
-        request.getRequestDispatcher("editPassword.jsp").forward(request,response);
+        userDAO.deleteGroup(id);
+        try {
+            response.sendRedirect("/homeUser");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void showUpdateGroup(HttpServletRequest request, HttpServletResponse response) {
+        int id = Integer.parseInt(request.getParameter("id"));
+        Group group = userDAO.findGroupById(id);
+        request.setAttribute("listGroup", group);
+        try {
+            request.getRequestDispatcher("home/updateGroup.jsp").forward(request,response);
+        } catch (ServletException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     private void showNewFromTable(HttpServletRequest request, HttpServletResponse response) {
@@ -140,11 +156,10 @@ public class HomeUserController extends HttpServlet {
             throw new RuntimeException(e);
         }
     }
-
     private void selectGroupFromSql(HttpServletRequest request, HttpServletResponse response) {
         List<Group> groups = userDAO.selectGroupFromSQL();
         Collections.sort(groups, new Comparator<Group>() {
-            @Override
+            @Override 
             public int compare(Group group1, Group group2) {
                 return group1.getName().compareToIgnoreCase(group2.getName());
             }

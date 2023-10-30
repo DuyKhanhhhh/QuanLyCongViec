@@ -17,14 +17,21 @@ public interface IUserDAO {
   
     User findUserById(int id);
 
-    void editPassWordUser(User user);
+    void editPassWordUser(String email, String rePassword);
 
     void addGroup(Group group);
 
     List<Group> selectGroupFromSQL();
 
-    void addGroup(Table table);
+    void addTable(Table table);
 
     List<Table> selectAllTable();
+  
+    boolean updateGroup(int id,Group group);
+  
+    boolean deleteGroup(int id);
+  
+    Group findGroupById(int id);
+  
     boolean editInformationUser(int id ,User user);
 }

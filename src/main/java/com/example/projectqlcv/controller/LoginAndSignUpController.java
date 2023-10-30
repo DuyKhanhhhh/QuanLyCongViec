@@ -39,7 +39,7 @@ public class LoginAndSignUpController extends HttpServlet {
     }
 
 
-    private void loginUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private void loginUser(HttpServletRequest request, HttpServletResponse response) {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         User user = userDAO.login(email, password);
@@ -97,17 +97,9 @@ public class LoginAndSignUpController extends HttpServlet {
         }
         switch (login) {
             case "login":
-                showGroupHomeUser(request, response);
                 break;
         }
     }
 
-    private void showGroupHomeUser(HttpServletRequest request, HttpServletResponse response) {
-        try {
-            response.sendRedirect("/homeUser");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
 
-    }
 }

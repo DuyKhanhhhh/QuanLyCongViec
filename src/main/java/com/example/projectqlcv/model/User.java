@@ -28,6 +28,19 @@ public class User {
         this.password = password;
     }
 
+    public User(int id,String name,String phoneNumber,String address,String avatar){
+        this.id=id;
+        this.name=name;
+        this.phoneNumber=phoneNumber;
+        this.address=address;
+        this.avatar=avatar;
+    }
+    public User(String name,String phoneNumber,String address,String avatar){
+        this.name=name;
+        this.phoneNumber=phoneNumber;
+        this.address=address;
+        this.avatar=avatar;
+    }
     public User(String name, String email, String phoneNumber, String password, String address, String avatar) {
         this.id = id;
         this.name = name;

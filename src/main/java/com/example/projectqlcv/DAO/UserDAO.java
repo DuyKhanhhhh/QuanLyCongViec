@@ -15,7 +15,8 @@ public class UserDAO implements IUserDAO {
 
     private static final String ADD_USER_TO_SQL = "INSERT INTO user(email, name, phoneNumber, password) VALUES(?, ?, ?, ?) ";
     private static final String LOGIN_USER_HOME = "SELECT * FROM user WHERE email = ? AND password = ?";
-    private static final String SELECT_USER_ID = "SELECT email FROM user WHERE id = ?";
+    private static final String SELECT_EMAIL_USER_ID = "SELECT email FROM user WHERE id = ?";
+    private static final String SELECT_INFORMATION_USER_ID = "SELECT id,name,phoneNumber,address,avatar FROM user WHERE id = ?";
     private static final String CHECK_USER_LOGIN = "select * from user where email = ?";
     private static final String UPDATE_PASSWORD_USER = "UPDATE user SET password = ? WHERE email = ? ";
     private static final String UPDATE_USER_ID = "UPDATE user SET name = ?, phoneNumber = ? , address = ? , avatar = ? WHERE id = ?";
@@ -59,11 +60,11 @@ public class UserDAO implements IUserDAO {
     }
 
     @Override
-    public User findUserById(int id) {
+    public User findEmailById(int id) {
         User user = null;
         try {
             Connection connection = connection();
-            PreparedStatement preparedStatement = connection.prepareStatement(SELECT_USER_ID);
+            PreparedStatement preparedStatement = connection.prepareStatement(SELECT_EMAIL_USER_ID);
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
@@ -73,6 +74,30 @@ public class UserDAO implements IUserDAO {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        return user;
+    }
+
+    @Override
+    public User selectAllUserId(int id) {
+        User user = null;
+        try {
+            Connection connection = connection();
+            PreparedStatement preparedStatement = connection.prepareStatement(SELECT_INFORMATION_USER_ID);
+            preparedStatement.setInt(1,id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()){
+                int iD= resultSet.getInt("id");
+                String name = resultSet.getString("name");
+                String phoneNumber = resultSet.getString("phoneNumber");
+                String address = resultSet.getString("address");
+                String avatar = resultSet.getString("avatar");
+                user = new User(iD,name,phoneNumber,address,avatar);
+            }
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
         return user;

@@ -14,8 +14,12 @@ public interface IUserDAO {
     User checkLoginUser(String email);
   
     User findPasswordByEmail(String email, String password);
+
+    User findEmailById(int id);
+    User selectAllUserId(int id);
   
     User findUserById(int id);
+
 
     void editPassWordUser(String email, String rePassword);
 

@@ -11,9 +11,7 @@ import java.util.List;
 public class UserDAO implements IUserDAO {
     private String connectUrl = "jdbc:mysql://localhost:3306/workManagement";
     private String userName = "root";
-
-    private String passWord = "giang";
-
+    private String passWord = "Duykhanh123@";
 
     private static final String ADD_USER_TO_SQL = "INSERT INTO user(email, name, phoneNumber, password) VALUES(?, ?, ?, ?) ";
     private static final String LOGIN_USER_HOME = "SELECT * FROM user WHERE email = ? AND password = ?";
@@ -27,6 +25,9 @@ public class UserDAO implements IUserDAO {
     private static final String SELECT_ALL_GROUP_WORK = "SELECT * FROM groupWork";
     private static final String ADD_TABLE_TO_SQL = "INSERT INTO tableWork(tableName, permission, groupDescribe) VALUES(?, ?, ?)";
     private static final String SELECT_ALL_TABLE = "SELECT * FROM tableWork";
+    private static final String UPDATE_GROUP = "UPDATE groupWork SET name = ?, groupType = ?, permission = ?, information = ? WHERE id = ?";
+    private static final String SELECT_GROUP_BY_ID = "SELECT * FROM groupWork where id = ?";
+    private static final String DELETE_GROUP_SQL = "DELETE FROM groupWork where id = ?";
 
     protected Connection connection() throws ClassNotFoundException, SQLException {
         Connection connection = null;
@@ -159,7 +160,7 @@ public class UserDAO implements IUserDAO {
         try (Connection connection = connection(); PreparedStatement preparedStatement = connection.prepareStatement(CHECK_USER_LOGIN)) {
             preparedStatement.setString(1, email);
             ResultSet rs = preparedStatement.executeQuery();
-            while (rs.next()) {
+while (rs.next()) {
                 int id = rs.getInt("id");
                 String emailDB = rs.getString("email");
                 String password = rs.getString("password");
@@ -214,7 +215,7 @@ public class UserDAO implements IUserDAO {
     }
 
     @Override
-    public void addGroup(Table table) {
+    public void addTable(Table table) {
         try {
             Connection connection = connection();
             PreparedStatement preparedStatement = connection.prepareStatement(ADD_TABLE_TO_SQL);
@@ -234,7 +235,7 @@ public class UserDAO implements IUserDAO {
         List<Table> listTable = new ArrayList<>();
         try {
             Connection connection = connection();
-            PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_TABLE);
+PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_TABLE);
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
                 String name = rs.getString("tableName");
@@ -251,6 +252,21 @@ public class UserDAO implements IUserDAO {
     }
 
     @Override
+
+    public boolean updateGroup(int id, Group group) {
+        boolean updateGroup;
+        try {
+            Connection connection = connection();
+            PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_GROUP);
+            preparedStatement.setString(1, group.getName());
+            preparedStatement.setString(2, group.getGroupType());
+            preparedStatement.setString(3, group.getPermission());
+            preparedStatement.setString(4, group.getInformation());
+            preparedStatement.setInt(5, id);
+            updateGroup = preparedStatement.executeUpdate() > 0;
+        }
+        return updateGroup;
+    }
     public boolean editInformationUser(int id, User user) {
         boolean rowUpdate;
         try {
@@ -267,6 +283,44 @@ public class UserDAO implements IUserDAO {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return rowUpdate;
+
+    @Override
+    public boolean deleteGroup(int id) {
+        boolean rowDelete;
+        try {
+            Connection connection = connection();
+            PreparedStatement preparedStatement = connection.prepareStatement(DELETE_GROUP_SQL);
+            preparedStatement.setInt(1, id);
+            rowDelete = preparedStatement.executeUpdate() > 0;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        return rowDelete;
+    }
+
+    @Override
+    public Group findGroupById(int id) {
+        Group listGroup = null;
+        try {
+            Connection connection = connection();
+            PreparedStatement preparedStatement = connection.prepareStatement(SELECT_GROUP_BY_ID);
+            preparedStatement.setInt(1,id);
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()){
+                int iD = rs.getInt("id");
+                String name = rs.getString("name");
+                String group = rs.getString("groupType");
+                String permission = rs.getString("permission");
+                String information = rs.getString("information");
+                listGroup = new Group(iD,name,group,permission,information);
+            }
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return listGroup;
     }
 }

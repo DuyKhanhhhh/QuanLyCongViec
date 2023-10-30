@@ -8,23 +8,24 @@ import java.util.ArrayList;
 import java.util.List;
 public class AdminDAO implements IAdminDAO {
 
+
     private String connectUrl = "jdbc:mysql://localhost:3306/workManagement";
     private String userName = "root";
-    private String passWord = "giang";
-
+    private String passWord = "Duykhanh123@";
+    private static final String ADD_USER_TO_SQL = "INSERT INTO user(email, name, phoneNumber, password) VALUES(?, ?, ?, ?) ";
     private static final String UPDATE_USER_ID = "UPDATE user SET name = ?, email = ? , phoneNumber = ? , password = ? , address = ? , avatar =  ? WHERE id = ? ";
     private static final String SELECT_ALL_USER_ID = "SELECT * FROM user WHERE id = ?";
     private static final String DELETE_USER_SQL = "delete from user where id = ?";
     private static final String SELECT_ALL_USER = "SELECT * FROM user";
-    private static final String ADD_USER_TO_SQL = "INSERT INTO user(email, name, phoneNumber, password) VALUES(?, ?, ?, ?) ";
     private static final String CHECK_ADMIN_LOGIN = "select * from user where email = ?";
+  
     protected Connection connection() throws ClassNotFoundException, SQLException {
         Connection connection = null;
         Class.forName("com.mysql.cj.jdbc.Driver");
         connection = DriverManager.getConnection(connectUrl, userName, passWord);
         return connection;
     }
-
+    
     @Override
     public List<User> selectAllUser() {
         List<User> users = new ArrayList<>();
@@ -71,6 +72,7 @@ public class AdminDAO implements IAdminDAO {
         }
         return user;
     }
+  
 
     @Override
     public boolean deleteUser(int id) {

@@ -27,7 +27,7 @@ public class HomeUserController extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
         if (action == null) {
             action = "";
@@ -35,6 +35,9 @@ public class HomeUserController extends HttpServlet {
         switch (action) {
             case "addGroup":
                 addGroup(request, response);
+                break;
+            case "updateGroup":
+                updateGroup(request,response);
                 break;
             case "addTable":
                 addTable(request, response);
@@ -60,12 +63,14 @@ public class HomeUserController extends HttpServlet {
 
     }
 
-    private void addTable(HttpServletRequest request, HttpServletResponse response) {
+    private void updateGroup(HttpServletRequest request, HttpServletResponse response) {
+        int id = Integer.parseInt(request.getParameter("id"));
         String name = request.getParameter("name");
-        String permission = request.getParameter("permission");
         String group = request.getParameter("group");
-        Table table = new Table(name, permission, group);
-        userDAO.addGroup(table);
+        String permission = request.getParameter("permission");
+        String information = request.getParameter("information");
+        Group groups = new Group(name,group,permission,information);
+        userDAO.updateGroup(id,groups);
         try {
             response.sendRedirect("/homeUser");
         } catch (IOException e) {
@@ -73,6 +78,18 @@ public class HomeUserController extends HttpServlet {
         }
     }
 
+    private void addTable(HttpServletRequest request, HttpServletResponse response) {
+        String name = request.getParameter("name");
+        String permission = request.getParameter("permission");
+        String group = request.getParameter("group");
+        Table table = new Table(name, permission, group);
+        userDAO.addTable(table);
+        try {
+            response.sendRedirect("/homeUser");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
     private void addGroup(HttpServletRequest request, HttpServletResponse response) {
         String name = request.getParameter("name");
         String groupType = request.getParameter("groupType");
@@ -88,7 +105,7 @@ public class HomeUserController extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
         if (action == null) {
             action = "";
@@ -96,6 +113,12 @@ public class HomeUserController extends HttpServlet {
         switch (action) {
             case "addGroup":
                 showNewFormGroup(request, response);
+                break;
+            case "updateGroup":
+                showUpdateGroup(request,response);
+                break;
+            case "delete":
+                deleteGroup(request,response);
                 break;
             case "addTable":
                 showNewFromTable(request, response);
@@ -120,6 +143,30 @@ public class HomeUserController extends HttpServlet {
         }
     }
 
+    private void deleteGroup(HttpServletRequest request, HttpServletResponse response) {
+        int id = Integer.parseInt(request.getParameter("id"));
+        userDAO.deleteGroup(id);
+        try {
+            response.sendRedirect("/homeUser");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void showUpdateGroup(HttpServletRequest request, HttpServletResponse response) {
+        int id = Integer.parseInt(request.getParameter("id"));
+        Group group = userDAO.findGroupById(id);
+        request.setAttribute("listGroup", group);
+        try {
+            request.getRequestDispatcher("home/updateGroup.jsp").forward(request,response);
+        } catch (ServletException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
     private void showNewFromTable(HttpServletRequest request, HttpServletResponse response) {
         try {
             List<Table> tableList = userDAO.selectAllTable();
@@ -142,11 +189,10 @@ public class HomeUserController extends HttpServlet {
             throw new RuntimeException(e);
         }
     }
-
     private void selectGroupFromSql(HttpServletRequest request, HttpServletResponse response) {
         List<Group> groups = userDAO.selectGroupFromSQL();
         Collections.sort(groups, new Comparator<Group>() {
-            @Override
+            @Override 
             public int compare(Group group1, Group group2) {
                 return group1.getName().compareToIgnoreCase(group2.getName());
             }

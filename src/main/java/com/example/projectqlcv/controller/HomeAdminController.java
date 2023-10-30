@@ -156,5 +156,4 @@ public class HomeAdminController extends HttpServlet {
     private void showNewForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.getRequestDispatcher("admin/create.jsp").forward(request, response);
     }
-
 }

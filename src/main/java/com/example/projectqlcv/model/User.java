@@ -21,11 +21,13 @@ public class User {
         this.email = email;
         this.rePassword = rePassword;
     }
-    public User(int id, String email, String password) {
+
+    public User(int id,String email, String password) {
         this.id = id;
         this.email = email;
         this.password = password;
     }
+
     public User(int id,String name,String phoneNumber,String address,String avatar){
         this.id=id;
         this.name=name;
@@ -39,7 +41,6 @@ public class User {
         this.address=address;
         this.avatar=avatar;
     }
-
     public User(String name, String email, String phoneNumber, String password, String address, String avatar) {
         this.id = id;
         this.name = name;
@@ -70,8 +71,8 @@ public class User {
         this.avatar = avatar;
     }
 
-    public User(int id,String name, String email, String phoneNumber, String password, String address, String avatar) {
-        this.id=id;
+    public User(int id, String name, String email, String phoneNumber, String password, String address, String avatar) {
+        this.id = id;
         this.name = name;
         this.email = email;
         this.phoneNumber = phoneNumber;

@@ -23,7 +23,7 @@ public class UpdatePasswordController extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)  {
         String login = request.getParameter("login");
         if (login == null) {
             login = "";

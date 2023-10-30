@@ -12,9 +12,14 @@ public interface IUserDAO {
     void signUp(String email, String password, String name, String phoneNumber);
 
     User checkLoginUser(String email);
+  
     User findPasswordByEmail(String email, String password);
+
     User findEmailById(int id);
     User selectAllUserId(int id);
+  
+    User findUserById(int id);
+
 
     void editPassWordUser(String email, String rePassword);
 
@@ -22,8 +27,15 @@ public interface IUserDAO {
 
     List<Group> selectGroupFromSQL();
 
-    void addGroup(Table table);
+    void addTable(Table table);
 
     List<Table> selectAllTable();
+  
+    boolean updateGroup(int id,Group group);
+  
+    boolean deleteGroup(int id);
+  
+    Group findGroupById(int id);
+  
     boolean editInformationUser(int id ,User user);
 }

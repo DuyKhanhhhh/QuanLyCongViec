@@ -28,4 +28,5 @@ public interface IUserDAO {
 
     List<Table> selectAllTable();
     boolean editInformationUser(int id ,User user);
+    Group selectGroupById(int id);
 }

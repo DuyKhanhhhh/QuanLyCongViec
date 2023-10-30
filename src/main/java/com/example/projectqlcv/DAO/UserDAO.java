@@ -26,6 +26,7 @@ public class UserDAO implements IUserDAO {
     private static final String ADD_TABLE_TO_SQL = "INSERT INTO tableWork(tableName, permission, groupDescribe) VALUES(?, ?, ?)";
     private static final String SELECT_ALL_TABLE = "SELECT * FROM tableWork";
     private static final String DELETE_GROUP_SQL = "delete from groupWork where id = ?";
+    private static final String SELECT_GROUP_BY_ID = "select * from groupWork where id = ?";
 
 
     protected Connection connection() throws ClassNotFoundException, SQLException {
@@ -63,7 +64,7 @@ public class UserDAO implements IUserDAO {
         User user = null;
         try {
             Connection connection = connection();
-PreparedStatement preparedStatement = connection.prepareStatement(SELECT_USER_ID);
+            PreparedStatement preparedStatement = connection.prepareStatement(SELECT_USER_ID);
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
@@ -150,7 +151,7 @@ PreparedStatement preparedStatement = connection.prepareStatement(SELECT_USER_ID
         try (Connection connection = connection(); PreparedStatement preparedStatement = connection.prepareStatement(CHECK_USER_LOGIN)) {
             preparedStatement.setString(1, email);
             ResultSet rs = preparedStatement.executeQuery();
-while (rs.next()) {
+        while (rs.next()) {
                 int id = rs.getInt("id");
                 String emailDB = rs.getString("email");
                 String password = rs.getString("password");
@@ -259,5 +260,28 @@ PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_TAB
             throw new RuntimeException(e);
         }
         return rowUpdate;
+    }
+
+    @Override
+    public Group selectGroupById(int id) {
+        Group group = null;
+        try(Connection connection = connection();
+        PreparedStatement preparedStatement = connection.prepareStatement(SELECT_GROUP_BY_ID);){
+            preparedStatement.setInt(1,id);
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()){
+                String name = rs.getString("name");
+                String groupType = rs.getString("groupType");
+                String permission = rs.getString("permission");
+                String information = rs.getString("information");
+                group = new Group(id,name,groupType,permission,information);
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        return group;
     }
 }

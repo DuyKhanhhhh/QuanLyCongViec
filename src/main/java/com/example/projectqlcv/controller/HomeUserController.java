@@ -5,6 +5,7 @@ import com.example.projectqlcv.DAO.UserDAO;
 import com.example.projectqlcv.model.Group;
 import com.example.projectqlcv.model.Table;
 import com.example.projectqlcv.model.User;
+import com.sun.net.httpserver.HttpExchange;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -113,6 +114,9 @@ public class HomeUserController extends HttpServlet {
             case "deleteGroup":
                 deleteGroup(request, response);
                 break;
+            case "informationGroup":
+                showNewFormByIdOfGroup(request,response);
+                break;
             default:
                 selectGroupFromSql(request, response);
         }
@@ -163,6 +167,13 @@ public class HomeUserController extends HttpServlet {
             throw new RuntimeException(e);
         }
     }
+    private void showNewFormByIdOfGroup(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        int id = Integer.parseInt(request.getParameter("id"));
+        Group group = userDAO.selectGroupById(id);
+        request.setAttribute("group",group);
+        request.getRequestDispatcher("information.jsp").forward(request,response);
+
+    }
 
     private void selectGroupFromSql(HttpServletRequest request, HttpServletResponse response) {
         List<Group> groups = userDAO.selectGroupFromSQL();
@@ -182,4 +193,5 @@ public class HomeUserController extends HttpServlet {
             throw new RuntimeException(e);
         }
     }
+
 }

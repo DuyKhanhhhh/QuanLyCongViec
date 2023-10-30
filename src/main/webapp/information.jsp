@@ -9,7 +9,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Home</title>
+    <title>Information Group</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <script src="https://kit.fontawesome.com/892d14366e.js" crossorigin="anonymous"></script>
@@ -190,19 +190,9 @@
             </div>
         </nav>
     </div>
-    <c:if test="${message != null}">
-        <div class="alert alert-success" role="alert">
-                ${message}
-        </div>
-    </c:if>
-    <script>
-        setTimeout(function () {
-            document.querySelector(".alert").remove();
-        }, 3000);
-    </script>
+
     <div class="row">
         <div class="col-2" id="boxLeft">
-
             <div class="table">
                 <div class="d-flex align-items-center">
                     <i class="fa-solid fa-table" style="color: #000000; font-size: 30px;"></i>
@@ -215,40 +205,27 @@
                         <i class="fa-solid fa-user-group" style="color: #000000; font-size: 30px"></i>
                         <span class="textSpan">Nhóm</span>
                     </div>
-                    <div class="group_add">
-                        <a href="/homeUser?action=addGroup">
-                            <i class="fa-regular fa-square-plus" style="color: #000000;font-size: 30px"></i>
-                        </a>
-                    </div>
                 </div>
             </div>
-            <c:forEach var="group" items="${groups}">
-                <div class="name_group">
-                    <h2>${group.name}</h2>
-                </div>
-
-            </c:forEach>
-
+            <h2>${group.name}</h2>
         </div>
         <div class="col-10">
             <div class="d-flex  align-items-center" id="contentTitle">
                 <i class="fa-solid fa-user-group" style="color: #000000; font-size: 30px"></i>
                 <span class="textSpan">Nhóm Của Bạn</span>
             </div>
-            <c:forEach var="group" items="${groups}">
                 <div class="group_main">
                     <div class="group_header">
                         <div class="d_flex_left">
                             <div class="project">
-                                <h2>${group.name}</h2>
+                                <h1>Name: <h2>${group.name}</h2></h1>
+                                <h1>Group type: <h2>${group.groupType}</h2></h1>
+                                <h1>Permission: <h2>${group.permission}</h2></h1>
+                                <h1>Information: <h2>${group.information}</h2></h1>
                             </div>
                         </div>
                         <div class="d_flex_right">
                             <div class="d-flex align-items-center ml-auto">
-                                <a href="/homeUser?action=informationGroup&id=${group.id}" class="icon">
-                                    <i class="fa-solid fa-table-cells" style="color: #000000; font-size: 30px; "></i>
-                                    <span style="font-size: 30px">Tổng quan</span>
-                                </a>
                                 <a href="#" class="icon">
                                     <i class="fa-solid fa-table" style="color: #000000; font-size: 30px; "></i>
                                     <span style="font-size: 30px">Bảng</span>
@@ -259,7 +236,7 @@
                                     <span style="font-size: 30px">Thành Viên</span>
                                 </a>
 
-                                <a href="/homeUser?action=deleteGroup&id=${group.id}" class="icon">
+                                <a href="#" class="icon">
                                     <i class="fa-solid fa-gear" style="color: #000000; font-size: 30px"></i>
                                     <span style="font-size: 30px">Cài Đặt</span>
                                 </a>
@@ -267,22 +244,7 @@
 
                         </div>
                     </div>
-                    <div class="group_content">
-                        <div class="table_create">
-                            <h4 style="text-align: center;margin-top: 33%"><c:out value="${listTable.name}"/></h4>
-                        </div>
-                        <a href="home/addTable.jsp" style="text-decoration: none; color: black">
-                            <div class="table_create">
-                                <h4 style="text-align: center;margin-top: 33%">Tạo Bảng Mới</h4>
-                            </div>
-                        </a>
-                    </div>
                 </div>
-            </c:forEach>
-            <div class="d-flex  align-items-center">
-                <i class="fa-solid fa-user-group" style="color: #000000; font-size: 30px"></i>
-                <span class="textSpan">Thành Viên Các Nhóm</span>
-            </div>
         </div>
     </div>
 </div>

@@ -179,6 +179,7 @@
                         <button>Name</button>
                         <div class="dropdown-options">
                             <a href="#">Setting</a>
+                            <a href="/">Edit</a>
                             <a href="/updatePassword?login=updatePassword&id=${user.id}">Change PassWord</a>
                             <a href="login.jsp">Logout</a>
                         </div>

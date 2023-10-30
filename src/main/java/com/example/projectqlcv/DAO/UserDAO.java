@@ -12,6 +12,7 @@ public class UserDAO implements IUserDAO {
     private String connectUrl = "jdbc:mysql://localhost:3306/workManagement";
     private String userName = "root";
     private String passWord = "Duykhanh123@";
+
     private static final String ADD_USER_TO_SQL = "INSERT INTO user(email, name, phoneNumber, password) VALUES(?, ?, ?, ?) ";
     private static final String LOGIN_USER_HOME = "SELECT * FROM user WHERE email = ? AND password = ?";
     private static final String SELECT_USER_ID = "SELECT email FROM user WHERE id = ?";
@@ -134,7 +135,7 @@ public class UserDAO implements IUserDAO {
         try (Connection connection = connection(); PreparedStatement preparedStatement = connection.prepareStatement(CHECK_USER_LOGIN)) {
             preparedStatement.setString(1, email);
             ResultSet rs = preparedStatement.executeQuery();
-            while (rs.next()) {
+while (rs.next()) {
                 int id = rs.getInt("id");
                 String emailDB = rs.getString("email");
                 String password = rs.getString("password");
@@ -209,7 +210,7 @@ public class UserDAO implements IUserDAO {
         List<Table> listTable = new ArrayList<>();
         try {
             Connection connection = connection();
-            PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_TABLE);
+PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_TABLE);
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
                 String name = rs.getString("tableName");
@@ -226,6 +227,7 @@ public class UserDAO implements IUserDAO {
     }
 
     @Override
+
     public boolean updateGroup(int id, Group group) {
         boolean updateGroup;
         try {
@@ -237,13 +239,25 @@ public class UserDAO implements IUserDAO {
             preparedStatement.setString(4, group.getInformation());
             preparedStatement.setInt(5, id);
             updateGroup = preparedStatement.executeUpdate() > 0;
+        }
+        return updateGroup;
+    }
+    public boolean editInformationUser(int id, User user) {
+        boolean rowUpdate;
+        try {
+            Connection connection = connection();
+            PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_USER_ID);
+            preparedStatement.setString(1,user.getName());
+            preparedStatement.setString(2,user.getPhoneNumber());
+            preparedStatement.setString(3,user.getAddress());
+            preparedStatement.setString(4,user.getAvatar());
+            preparedStatement.setInt(5,id);
+            rowUpdate = preparedStatement.executeUpdate() > 0;
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return updateGroup;
-    }
 
     @Override
     public boolean deleteGroup(int id) {
@@ -284,5 +298,4 @@ public class UserDAO implements IUserDAO {
         }
         return listGroup;
     }
-
 }

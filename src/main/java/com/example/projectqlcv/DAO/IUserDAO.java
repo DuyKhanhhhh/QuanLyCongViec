@@ -26,7 +26,12 @@ public interface IUserDAO {
     void addTable(Table table);
 
     List<Table> selectAllTable();
+  
     boolean updateGroup(int id,Group group);
+  
     boolean deleteGroup(int id);
+  
     Group findGroupById(int id);
+  
+    boolean editInformationUser(int id ,User user);
 }

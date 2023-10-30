@@ -76,7 +76,7 @@ public class UpdatePasswordController extends HttpServlet {
     private void showEditPassword(HttpServletRequest request, HttpServletResponse response){
         String id = request.getParameter("id");
 
-        User user = userDAO.findUserById(Integer.parseInt(id));
+        User user = userDAO.findEmailById(Integer.parseInt(id));
         request.setAttribute("user",user);
         RequestDispatcher dispatcher = request.getRequestDispatcher("editPassword.jsp");
         try {

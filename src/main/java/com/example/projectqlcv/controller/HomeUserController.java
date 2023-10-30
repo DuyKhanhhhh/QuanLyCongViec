@@ -4,6 +4,7 @@ import com.example.projectqlcv.DAO.IUserDAO;
 import com.example.projectqlcv.DAO.UserDAO;
 import com.example.projectqlcv.model.Group;
 import com.example.projectqlcv.model.Table;
+import com.example.projectqlcv.model.User;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -38,7 +39,25 @@ public class HomeUserController extends HttpServlet {
             case "addTable":
                 addTable(request, response);
                 break;
+            case "editUser":
+                editInformation(request,response);
+                break;
         }
+    }
+    private void editInformation(HttpServletRequest request, HttpServletResponse response){
+        int id = Integer.parseInt(request.getParameter("idUd"));
+        String name = request.getParameter("nameUd");
+        String phoneNumber = request.getParameter("phoneNumberUd");
+        String address = request.getParameter("addressUd");
+        String avatar = request.getParameter("avatarUd");
+        User user = new User(name,phoneNumber,address,avatar);
+        userDAO.editInformationUser(id,user);
+        try {
+            response.sendRedirect("/homeUser");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     private void addTable(HttpServletRequest request, HttpServletResponse response) {
@@ -81,8 +100,23 @@ public class HomeUserController extends HttpServlet {
             case "addTable":
                 showNewFromTable(request, response);
                 break;
+            case "editUser":
+                showEditFormUser(request,response);
+                break;
             default:
                 selectGroupFromSql(request, response);
+        }
+    }
+    private void showEditFormUser(HttpServletRequest request ,HttpServletResponse response){
+        int id = Integer.parseInt(request.getParameter("id"));
+        User user = userDAO.selectAllUserId(id);
+        request.setAttribute("user",user);
+        try {
+            request.getRequestDispatcher("home/editUser.jsp").forward(request,response);
+        } catch (ServletException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 

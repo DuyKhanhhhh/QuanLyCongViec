@@ -234,9 +234,9 @@
                         </div>
                         <div class="d_flex_right">
                             <div class="d-flex align-items-center ml-auto">
-                                <a href="all.jsp" class="icon">
+                                <a href="#" class="icon">
                                     <i class="fa-solid fa-table-list" style="color: #000000; font-size: 30px;"></i>
-                                     <span style="font-size: 30px">Tổng quan</span>
+                                    <span style="font-size: 30px">Tổng quan</span>
                                 </a>
 
                                 <a href="#" class="icon">

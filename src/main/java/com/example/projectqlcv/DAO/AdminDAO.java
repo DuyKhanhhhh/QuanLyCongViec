@@ -17,7 +17,6 @@ public class AdminDAO implements IAdminDAO {
     private static final String SELECT_ALL_USER_ID = "SELECT * FROM user WHERE id = ?";
     private static final String DELETE_USER_SQL = "delete from user where id = ?";
     private static final String SELECT_ALL_USER = "SELECT * FROM user";
-    private static final String ADD_USER_TO_SQL = "INSERT INTO user(email, name, phoneNumber, password) VALUES(?, ?, ?, ?) ";
     private static final String CHECK_ADMIN_LOGIN = "select * from user where email = ?";
   
     protected Connection connection() throws ClassNotFoundException, SQLException {
@@ -89,6 +88,7 @@ public class AdminDAO implements IAdminDAO {
         }
         return rowDeleted;
     }
+
 
     @Override
     public void createUser(String email, String password, String name, String phoneNumber) {

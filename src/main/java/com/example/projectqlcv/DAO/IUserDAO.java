@@ -18,6 +18,7 @@ public interface IUserDAO {
     User findUserById(int id);
 
     void editPassWordUser(User user);
+    boolean deleteGroup(int id);
 
     void addGroup(Group group);
 

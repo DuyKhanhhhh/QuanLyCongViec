@@ -67,6 +67,12 @@ public class User {
         this.avatar = avatar;
     }
 
+    public User(int id, String emailDB, String passWord) {
+        this.id = id;
+        this.email = emailDB;
+        this.password = passWord;
+    }
+
     public String getPhoneNumber() {
         return phoneNumber;
     }

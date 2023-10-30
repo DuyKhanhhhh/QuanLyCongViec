@@ -6,6 +6,7 @@ import com.example.projectqlcv.DAO.IAdminDAO;
 import com.example.projectqlcv.DAO.IUserDAO;
 import com.example.projectqlcv.DAO.UserDAO;
 
+import com.example.projectqlcv.model.Group;
 import com.example.projectqlcv.model.User;
 
 import javax.servlet.RequestDispatcher;
@@ -22,6 +23,7 @@ import java.util.ArrayList;
 @WebServlet(name = "HomeAdminController", value = "/homeAdmin")
 public class HomeAdminController extends HttpServlet {
     private IAdminDAO adminDAO;
+
     @Override
     public void init() {
         adminDAO = new AdminDAO();
@@ -41,6 +43,7 @@ public class HomeAdminController extends HttpServlet {
             throw new RuntimeException(e);
         }
     }
+
 
     private void createUser(HttpServletRequest request, HttpServletResponse response) {
         try {
@@ -120,7 +123,7 @@ public class HomeAdminController extends HttpServlet {
                 deleteUser(request, response);
                 break;
             case "create":
-                showNewForm(request,response);
+                showNewForm(request, response);
                 break;
             default:
                 showAllUser(request, response);
@@ -153,6 +156,7 @@ public class HomeAdminController extends HttpServlet {
             throw new RuntimeException(e);
         }
     }
+
     private void showNewForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.getRequestDispatcher("admin/create.jsp").forward(request, response);
     }

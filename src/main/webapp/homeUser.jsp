@@ -190,6 +190,16 @@
             </div>
         </nav>
     </div>
+    <c:if test="${message != null}">
+        <div class="alert alert-success" role="alert">
+                ${message}
+        </div>
+    </c:if>
+    <script>
+        setTimeout(function () {
+            document.querySelector(".alert").remove();
+        }, 3000);
+    </script>
     <div class="row">
         <div class="col-2" id="boxLeft">
             <div class="table">
@@ -244,7 +254,7 @@
                                     <span style="font-size: 30px">Thành Viên</span>
                                 </a>
 
-                                <a href="#" class="icon">
+                                <a href="/homeUser?action=deleteGroup&id=${group.id}" class="icon">
                                     <i class="fa-solid fa-gear" style="color: #000000; font-size: 30px"></i>
                                     <span style="font-size: 30px">Cài Đặt</span>
                                 </a>

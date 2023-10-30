@@ -44,7 +44,7 @@ public class UpdatePasswordController extends HttpServlet {
             User user = userDAO.findPasswordByEmail(email, password);
             if (user != null) {
                 if (newPassword.equals(confirmPassword) && !password.equals(newPassword)) {
-                    userDAO.editPassWordUser(email, newPassword);
+                    userDAO.editPassWordUser(user);
                     request.setAttribute("message", "Update success !");
                     request.getRequestDispatcher("login.jsp").forward(request, response);
                 } else {
